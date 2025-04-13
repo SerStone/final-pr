@@ -1,0 +1,47 @@
+.plusButton {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid white;
+    width: 40px; /* Фіксована ширина */
+    height: 40px; /* Фіксована висота */
+    background-color: black;
+    overflow: hidden;
+}
+
+.plusButton::before {
+    position: absolute;
+    content: "";
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-width: 0 14px 14px 0; /* Замінив змінні на конкретні значення */
+    border-style: solid;
+    border-color: transparent white transparent transparent;
+    transition: border-width 0.2s ease-in-out;
+}
+
+.plusButton:hover {
+    cursor: pointer;
+}
+
+.plusButton:hover::before,
+.plusButton:focus-visible::before {
+    border-width: 0 80px 80px 0; /* Розширюємо трикутник при наведенні */
+}
+
+.plusButton > .plusIcon {
+    fill: white;
+    width: 28px; /* Фіксований розмір іконки */
+    height: 28px;
+    z-index: 1;
+    transition: transform 0.2s ease-in-out, fill 0.2s ease-in-out;
+}
+
+.plusButton:hover > .plusIcon,
+.plusButton:focus-visible > .plusIcon {
+    fill: black;
+    transform: rotate(180deg);
+}

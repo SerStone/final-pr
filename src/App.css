@@ -1,0 +1,24 @@
+:root {
+    --plus_sideLength: 2.5rem;
+    --plus_topRightTriangleSideLength: 0.9rem;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    overflow-y: auto;
+
+}
+.css-wddlab-MuiContainer-root {
+    background-color: transparent !important;
+    padding-left: 0 !important;
+}
+
+
+.css-e4ezq8-MuiContainer-root {
+    padding-left: 0 !important;
+}
+
+
+

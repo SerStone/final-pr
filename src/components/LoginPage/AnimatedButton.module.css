@@ -1,0 +1,74 @@
+.button {
+    width: 130px;
+    height: 50px;
+    border-radius: 24%;
+    border: 3px solid #89a2e1;
+    background: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.3s ease;
+    font-size: medium;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: bold;
+
+}
+
+.button:disabled {
+    cursor: default;
+}
+
+/* --- Коло, що крутиться (анімація) --- */
+.loader {
+    width: 30px;
+    height: 30px;
+    border: 4px solid transparent;
+    border-top: 4px solid #89a2e1;
+    border-radius: 50%;
+    animation: spin 2s linear infinite;
+}
+
+/* --- Галочка (зелений колір) --- */
+.check {
+    stroke: #17b978;
+    stroke-width: 3;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    width: 30px;
+    height: 30px;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+}
+
+/* --- Червоний хрестик (коли помилка) --- */
+.cross {
+    stroke: #ff304f;
+    stroke-width: 3;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    width: 30px;
+    height: 30px;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+}
+
+/* --- Анімація обертання --- */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* --- Плавне з'явлення галочки/хрестика --- */
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}

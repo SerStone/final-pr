@@ -1,0 +1,92 @@
+.noselect {
+    width: 150px;
+    height: 50px;
+    background: none;
+    border: 4px solid #ff304f;
+    border-radius: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 100ms;
+    position: relative;
+}
+
+.noselect span,
+.noselect svg {
+    position: absolute;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+.noselect:focus {
+    outline: none;
+    border: 2px solid #1e2a78;
+    width: 50px;
+    border-left: 4px solid #1e2a78;
+    border-bottom: 4px solid #1e2a78;
+    animation: spin 2s 500ms forwards;
+}
+
+.noselect:focus span {
+    color: transparent;
+}
+
+/* --- Галочка (зелений колір) --- */
+.check {
+    fill: transparent;
+    opacity: 0;
+    transition: fill 0.5s, opacity 0.5s;
+}
+
+.success .check {
+    fill: #17b978 !important;
+    opacity: 1;
+}
+
+/* --- Червоний хрестик (коли помилка) --- */
+.cross {
+    fill: transparent;
+    opacity: 0;
+    transition: fill 0.5s, opacity 0.5s;
+}
+
+.error .cross {
+    fill: #ff304f !important;
+    opacity: 1;
+}
+
+
+.hide {
+    opacity: 0 !important;
+}
+
+.show {
+    opacity: 1 !important;
+}
+
+@keyframes spin {
+    80% {
+        border: 4px solid transparent;
+        border-left: 4px solid #303a52;
+    }
+    100% {
+        transform: rotate(1080deg);
+        border: 4px solid #303a52;
+    }
+}
+
+@keyframes check {
+    to {
+        fill: #17b978;
+    }
+}
+
+@keyframes cross {
+    to {
+        fill: #ff304f;
+    }
+}
+
+
