@@ -9,11 +9,9 @@ import {
 } from "@mui/material";
 import {Block, LockOpen, LockReset, Send } from "@mui/icons-material";
 
-import { IUser } from "../../interfaces";
-import { LoaderOrError } from "../../components/LoadingOrError/LoadingOrError";
-import { Pagination } from "../../components/Pagination/Pagination";
+import { useThemeContext, Pagination, LoaderOrError } from "../../components";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { useThemeContext } from "../../components/ThemeContext/ThemeContext";
+import { IUser } from "../../interfaces";
 
 import styles from "./AdminPanel.module.css";
 
@@ -237,14 +235,12 @@ const AdminPanel = () => {
 
             </Table>
 
-            {/* Пагінація */}
             <Pagination
                 currentPage={page}
                 totalPages={totalPages}
                 onPageChange={handlePageChange}
             />
 
-            {/* Modal for Creating Manager */}
             <Dialog open={open} onClose={handleClose} sx={{ '& .MuiPaper-root': { borderRadius: 4, padding: 2 } }}>
                 <DialogTitle sx={{ fontSize: "1.5rem", fontWeight: "bold", textAlign: "center" }}>
                     Create Manager

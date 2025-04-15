@@ -20,7 +20,6 @@
     cursor: default;
 }
 
-/* --- Коло, що крутиться (анімація) --- */
 .loader {
     width: 30px;
     height: 30px;
@@ -30,7 +29,6 @@
     animation: spin 2s linear infinite;
 }
 
-/* --- Галочка (зелений колір) --- */
 .check {
     stroke: #17b978;
     stroke-width: 3;
@@ -43,7 +41,6 @@
     animation: fadeIn 0.5s forwards;
 }
 
-/* --- Червоний хрестик (коли помилка) --- */
 .cross {
     stroke: #ff304f;
     stroke-width: 3;
@@ -56,7 +53,6 @@
     animation: fadeIn 0.5s forwards;
 }
 
-/* --- Анімація обертання --- */
 @keyframes spin {
     0% {
         transform: rotate(0deg);
@@ -66,7 +62,6 @@
     }
 }
 
-/* --- Плавне з'явлення галочки/хрестика --- */
 @keyframes fadeIn {
     to {
         opacity: 1;

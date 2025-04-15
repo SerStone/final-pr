@@ -55,7 +55,7 @@ const EditOrderModal: FC<EditOrderModalProps> = ({ open, onClose, order }) => {
                 },
             })).unwrap();
 
-            onClose(); // Закриваємо модалку
+            onClose();
         } catch (error) {
             console.error("Error updating order:", error);
         } finally {

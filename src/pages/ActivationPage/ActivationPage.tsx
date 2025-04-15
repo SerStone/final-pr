@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { TextField, Button, Alert, Container, Typography, Box } from "@mui/material";
+
 import { authService } from "../../services";
 
 const ActivateAccountForm = () => {
-    const { token } = useParams<{ token: string }>(); // Get the token from the URL
+    const { token } = useParams<{ token: string }>();
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState<string | null>(null);

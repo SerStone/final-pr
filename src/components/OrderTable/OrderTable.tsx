@@ -17,6 +17,7 @@ const OrdersTable = () => {
     const { orders, totalPages, isLoading, error } = useAppSelector(state => state.orders);
     const { groups, isLoading: isGroupsLoading } = useAppSelector(state => state.groups);
     const { userData } = useAppSelector(state => state.user)
+    const username = userData.username
 
     const id = userData?.id;
 
@@ -110,7 +111,6 @@ const OrdersTable = () => {
     return (
         <Box sx={{ maxHeight: "80vh", overflowY: "auto", padding: 2 }}>
 
-            {/* Фільтри */}
             <OrderFilters
                 filters={{
                     course,
@@ -129,6 +129,7 @@ const OrdersTable = () => {
                     created_at_before,
                     manager,
                 }}
+                username={username}
                 userId={id}
                 groups={groups}
                 handleFilterChange={handleFilterChange}

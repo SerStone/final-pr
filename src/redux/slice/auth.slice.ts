@@ -7,7 +7,7 @@ import {authService, axiosService } from '../../services';
 const getUser = createAsyncThunk("user/getUser", async (_, { rejectWithValue }) => {
     try {
         const { data } = await axiosService.get(urls.auth.me);
-        localStorage.setItem("user", JSON.stringify(data)); // Зберігаємо у localStorage
+        localStorage.setItem("user", JSON.stringify(data));
         return data;
     } catch (error: unknown) {
         if (axios.isAxiosError(error)) {

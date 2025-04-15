@@ -4,8 +4,8 @@
     justify-content: center;
     align-items: center;
     border: 1px solid white;
-    width: 40px; /* Фіксована ширина */
-    height: 40px; /* Фіксована висота */
+    width: 40px;
+    height: 40px;
     background-color: black;
     overflow: hidden;
 }
@@ -17,7 +17,7 @@
     right: 0;
     width: 0;
     height: 0;
-    border-width: 0 14px 14px 0; /* Замінив змінні на конкретні значення */
+    border-width: 0 14px 14px 0;
     border-style: solid;
     border-color: transparent white transparent transparent;
     transition: border-width 0.2s ease-in-out;
@@ -29,12 +29,12 @@
 
 .plusButton:hover::before,
 .plusButton:focus-visible::before {
-    border-width: 0 80px 80px 0; /* Розширюємо трикутник при наведенні */
+    border-width: 0 80px 80px 0;
 }
 
 .plusButton > .plusIcon {
     fill: white;
-    width: 28px; /* Фіксований розмір іконки */
+    width: 28px;
     height: 28px;
     z-index: 1;
     transition: transform 0.2s ease-in-out, fill 0.2s ease-in-out;

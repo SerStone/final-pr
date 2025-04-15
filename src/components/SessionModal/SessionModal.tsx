@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography } from "@mui/material";
+
 import { authService } from "../../services";
 
 const SessionModal = () => {
     const [open, setOpen] = useState(false);
     const [resolver, setResolver] = useState<(token: string | null) => void>();
+    const navigate = useNavigate();
 
     useEffect(() => {
         import("../../services/axios.service").then(({ setSessionModalHandler }) => {
@@ -39,6 +42,7 @@ const SessionModal = () => {
         authService.deleteToken();
         resolver?.(null);
         setOpen(false);
+        navigate("/login", { replace: true });
     };
 
     return (

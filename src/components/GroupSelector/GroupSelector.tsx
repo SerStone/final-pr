@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useCallback, FC } from "react";
 import { Box, Button, CircularProgress, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
+
 import { IGroup } from "../../interfaces";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-
 import { groupSliceActions } from "../../redux";
 
 interface GroupSelectorProps {

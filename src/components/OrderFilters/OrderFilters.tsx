@@ -9,6 +9,7 @@ import {
     Checkbox
 } from "@mui/material";
 import { Refresh } from "@mui/icons-material";
+
 import { useThemeContext } from "../ThemeContext/ThemeContext";
 import { IGroup } from "../../interfaces";
 
@@ -34,6 +35,7 @@ interface OrderFiltersProps {
     };
     userId?: string | number;
     groups: IGroup[];
+    username: string;
     handleFilterChange: (key: string) => (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleDateChange: (key: string) => (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleResetFilters: () => void;
@@ -41,6 +43,7 @@ interface OrderFiltersProps {
 }
 
 const OrderFilters: React.FC<OrderFiltersProps> = ({
+                                                       username,
                                                        filters,
                                                        userId,
                                                        groups,
@@ -54,7 +57,7 @@ const OrderFilters: React.FC<OrderFiltersProps> = ({
     return (
         <Box sx={{ p: 2, backgroundColor: darkMode ? "#28293D" : "#fdfdff", borderRadius: 2 }}>
             <Grid container spacing={2}>
-                {/* Перший ряд */}
+
                 <Grid item xs={12} sm={1.5}>
                     <TextField select fullWidth label="course" value={filters.course} onChange={handleFilterChange("course")}>
                         <MenuItem value="">All courses</MenuItem>
@@ -108,7 +111,6 @@ const OrderFilters: React.FC<OrderFiltersProps> = ({
                     </IconButton>
                 </Grid>
 
-                {/* Другий ряд */}
                 <Grid item xs={12} sm={1.5}>
                     <TextField fullWidth label="email" value={filters.email} onChange={handleFilterChange("email")} />
                 </Grid>
@@ -144,7 +146,7 @@ const OrderFilters: React.FC<OrderFiltersProps> = ({
                                     setSearchParams(prev => {
                                         const newParams = new URLSearchParams(prev);
                                         if (e.target.checked && userId) {
-                                            newParams.set("manager", String(userId));
+                                            newParams.set("manager", username );
                                         } else {
                                             newParams.delete("manager");
                                         }

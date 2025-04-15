@@ -1,13 +1,15 @@
 import { TableRow, TableCell, Button, TextField, Box, Modal, Grid, Typography, MenuItem, Select, IconButton } from "@mui/material";
 import React, { FC, useEffect, useState } from "react";
+import DeleteIcon from "@mui/icons-material/Delete";
+
 import {IGroup, IOrder } from "../../interfaces";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { GroupSelector } from "../GroupSelector/GroupSelector";
 import { EditOrderModal } from "../EditOrderModal/EditOrderModal";
-import { orderSliceActions, commentActions  } from "../../redux";
+import { orderSliceActions  } from "../../redux";
 import { useThemeContext } from "../ThemeContext/ThemeContext";
+
 import styles from "./DeleteCommentBtn.module.css"
-import DeleteIcon from "@mui/icons-material/Delete";
 
 interface OrderProps {
     order: IOrder;
@@ -21,13 +23,21 @@ const OrderInfo: FC<OrderProps> = ({ order }) => {
         state.orders.orders.find(o => o.id === order.id)
     );
 
+    const currentOrder = orderFromState || order;
+
     const [isExpanded, setIsExpanded] = useState(false);
     const [text, setComment] = useState("");
-    const [comments, setComments] = useState(order.comments || []);
     const [isEditModalOpen, setEditModalOpen] = useState(false);
-    const [editedOrder, setEditedOrder] = useState<IOrder>(order);
+    const [editedOrder, setEditedOrder] = useState<IOrder>(currentOrder);
 
-    const canComment = userData && (!order.manager || order.manager.username === userData.username);
+    const canComment = userData && (!currentOrder.manager || currentOrder.manager.username === userData.username);
+    const { darkMode } = useThemeContext();
+
+    useEffect(() => {
+        if (orderFromState) {
+            setEditedOrder(orderFromState);
+        }
+    }, [orderFromState]);
 
     const handleToggleExpand = () => {
         setIsExpanded((prev) => !prev);
@@ -36,27 +46,20 @@ const OrderInfo: FC<OrderProps> = ({ order }) => {
     const handleCommentSubmit = async () => {
         if (!text.trim()) return;
 
-        const newComment = {
-            id: Math.random(),
-            order: order.id,
-            author: userData,
-            text,
-            created_at: new Date().toISOString(),
-        };
-
-        setComments((prev) => [newComment, ...prev]);
-        setComment("");
-
         try {
-            await dispatch(commentActions.addCommentToOrder({ orderId: order.id, text }));
+            await dispatch(orderSliceActions.addCommentToOrder({ orderId: currentOrder.id, text }));
+            setComment("");
         } catch (error) {
             console.error("Error adding comment:", error);
         }
     };
 
-    const handleEditClick = () => {
-        setEditedOrder(order);
-        setEditModalOpen(true);
+    const handleDeleteComment = async (commentId: number) => {
+        try {
+            await dispatch(orderSliceActions.deleteCommentFromOrder({ orderId: currentOrder.id, commentId }));
+        } catch (error) {
+            console.error("Error deleting comment:", error);
+        }
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,16 +67,10 @@ const OrderInfo: FC<OrderProps> = ({ order }) => {
         setEditedOrder((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handleDeleteComment = async (commentId: number) => {
-        try {
-            await dispatch(commentActions.deleteCommentFromOrder({ orderId: order.id, commentId }));
-            setComments(prevComments => prevComments.filter(comment => comment.id !== commentId));
-        } catch (error) {
-            console.error("Error deleting comment:", error);
-        }
+    const handleEditClick = () => {
+        setEditedOrder(currentOrder);
+        setEditModalOpen(true);
     };
-
-    const { darkMode } = useThemeContext(); // Отримуємо статус темної теми
 
 
     return (
@@ -85,7 +82,8 @@ const OrderInfo: FC<OrderProps> = ({ order }) => {
                     backgroundColor: isExpanded
                         ? (darkMode ? "gray" : "#f1f1f1")
                         : "inherit"
-                }}>
+                }}
+            >
                 <TableCell>{order.id}</TableCell>
                 <TableCell>{order.name}</TableCell>
                 <TableCell>{order.surname}</TableCell>
@@ -113,24 +111,23 @@ const OrderInfo: FC<OrderProps> = ({ order }) => {
                             <p><strong>UTM:</strong> {order.utm || "null"}</p>
 
                             <Box sx={{ marginTop: 2, maxHeight: 200, overflowY: "auto" }}>
-                                {comments.length > 0 ? (
-                                    comments.map((comment) => (
+                                {currentOrder.comments?.length > 0 ? (
+                                    currentOrder.comments.map((comment) => (
                                         <Box key={comment.id} sx={{ borderBottom: "1px solid #ddd", paddingBottom: 1, marginBottom: 1 }}>
                                             <p><strong>{comment.author.username}</strong> - {new Date(comment.created_at).toLocaleString()}
-                                            {userData?.username === comment.author.username || userData?.role === "manager" ? (
-                                                <IconButton
-                                                    onClick={() => handleDeleteComment(comment.id)}
-                                                    color="error"
-                                                    sx={{
-                                                        backgroundColor: "#b81414",
-                                                        "&:hover": { backgroundColor: "darkred" },
-                                                        marginLeft: "5px"
-                                                    }}
-                                                >
-                                                    <DeleteIcon sx={{ color: "white" }} />
-                                                </IconButton>
-
-                                            ) : null}
+                                                {(userData?.username === comment.author.username || userData?.role === "manager") && (
+                                                    <IconButton
+                                                        onClick={() => handleDeleteComment(comment.id)}
+                                                        color="error"
+                                                        sx={{
+                                                            backgroundColor: "#b81414",
+                                                            "&:hover": { backgroundColor: "darkred" },
+                                                            marginLeft: "5px"
+                                                        }}
+                                                    >
+                                                        <DeleteIcon sx={{ color: "white" }} />
+                                                    </IconButton>
+                                                )}
                                             </p>
                                             <p>{comment.text}</p>
                                         </Box>
@@ -167,6 +164,7 @@ const OrderInfo: FC<OrderProps> = ({ order }) => {
             <EditOrderModal open={isEditModalOpen} onClose={() => setEditModalOpen(false)} order={order} />
         </>
     );
+
 };
 
 export { OrderInfo };

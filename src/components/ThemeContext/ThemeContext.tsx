@@ -31,12 +31,12 @@ export const ThemeProviderComponent: React.FC<{ children: React.ReactNode }> = (
             mode: darkMode ? "dark" : "light",
             ...(darkMode && {
                 background: {
-                    default: "#1E1E2D", // Новий колір фону для темної теми
-                    paper: "#1E1E2D", // Колір фону для карток/контейнерів
+                    default: "#1E1E2D",
+                    paper: "#1E1E2D",
                 },
                 text: {
-                    primary: "#ffffff", // Колір основного тексту
-                    secondary: "#b0c4de", // Колір вторинного тексту
+                    primary: "#ffffff",
+                    secondary: "#b0c4de",
                 },
             }),
         },
@@ -65,7 +65,7 @@ export const ThemeProviderComponent: React.FC<{ children: React.ReactNode }> = (
     return (
         <ThemeContext.Provider value={{ toggleTheme, darkMode }}>
             <ThemeProvider theme={theme}>
-                <CssBaseline /> {/* You can also remove or customize this */}
+                <CssBaseline />
                 {children}
             </ThemeProvider>
         </ThemeContext.Provider>

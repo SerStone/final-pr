@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
-import { Header } from "../../components";
-import {OrdersTable} from "../../components/OrderTable/OrderClone";
+import { Header, OrdersTable } from "../../components";
+
 
 const OrdersPage = () => {
     return (

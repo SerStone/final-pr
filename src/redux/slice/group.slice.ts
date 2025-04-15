@@ -19,7 +19,6 @@ const initialState: GroupsState = {
     errors: null,
 };
 
-// Асинхронний thunk для отримання всіх груп
 const getAllGroups = createAsyncThunk<IGroupPagination<IGroup>, void>(
     "groups/getAllGroups",
     async (_, { rejectWithValue }) => {
@@ -32,7 +31,6 @@ const getAllGroups = createAsyncThunk<IGroupPagination<IGroup>, void>(
     }
 );
 
-// Асинхронний thunk для створення нової групи
 const createGroup = createAsyncThunk<IGroup, string>(
     "groups/createGroup",
     async (groupName, { rejectWithValue }) => {
@@ -56,7 +54,6 @@ const slice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            // Обробка отримання всіх груп
             .addCase(getAllGroups.fulfilled, (state, action) => {
                 state.groups = action.payload.data;
                 state.totalPages = action.payload.total_pages;
@@ -71,7 +68,6 @@ const slice = createSlice({
                 state.errors = action.payload as string;
             })
 
-            // Обробка створення нової групи
             .addCase(createGroup.fulfilled, (state, action) => {
                 state.groups = [...state.groups, action.payload];
             })
@@ -90,6 +86,7 @@ const groupSliceActions = {
     ...actions,
     getAllGroups,
     createGroup,
+
 };
 
 export {

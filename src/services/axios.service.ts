@@ -1,6 +1,7 @@
 import axios from "axios";
-import { authService } from "./auth.service";
 import { createBrowserHistory } from "history";
+
+import { authService } from "./auth.service";
 import { baseURL } from "../constants";
 
 
@@ -17,7 +18,6 @@ axiosService.interceptors.request.use((config) => {
     return config;
 });
 
-// Глобальна змінна для збереження функції виклику модального вікна
 let showSessionModal: (() => Promise<string | null>) | null = null;
 
 export const setSessionModalHandler = (handler: () => Promise<string | null>) => {
@@ -42,16 +42,17 @@ axiosService.interceptors.response.use(
 
             try {
                 const newAccessToken = await showSessionModal();
+
                 if (newAccessToken && originalRequest.headers) {
                     originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
                     return axiosService(originalRequest);
                 } else {
                     authService.deleteToken();
-                    window.location.href = "/login";
+                    return Promise.reject(error);
                 }
             } catch (err) {
                 authService.deleteToken();
-                window.location.href = "/login";
+                return Promise.reject(error);
             } finally {
                 isRefreshing = false;
             }
@@ -60,5 +61,6 @@ axiosService.interceptors.response.use(
         return Promise.reject(error);
     }
 );
+
 
 export { axiosService };

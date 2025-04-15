@@ -1,10 +1,11 @@
+import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import * as XLSX from "xlsx";
 import { Button } from "@mui/material";
+
+import { saveAs } from "file-saver";
 import {IOrder} from '../../interfaces'
 import { orderService } from "../../services";
-import { useSearchParams } from "react-router-dom";
-import { useState } from "react";
-import { saveAs } from "file-saver";
 
 import styles from "./ExcelButton.module.css";
 
@@ -30,13 +31,11 @@ const ExportToExcel = () => {
                 allOrders = [...allOrders, ...data.data];
                 totalPages = data.total_pages;
 
-                // оновлюємо прогрес
                 setProgress(Math.round((page / totalPages) * 100));
 
                 page++;
             } while (page <= totalPages);
 
-            // завершено
             setProgress(null);
             return allOrders;
         } catch (error) {

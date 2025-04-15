@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { TextField, Button, Alert, Container, Typography, Box } from "@mui/material";
+
 import { authService } from "../../services";
 
 const PasswordResetPage = () => {
@@ -29,9 +30,9 @@ const PasswordResetPage = () => {
         setLoading(true);
 
         try {
-            const response = await authService.resetPassword(token, password); // Токен передається через URL
+            const response = await authService.resetPassword(token, password);
             console.log(response);
-            setSuccess(response.data.detail); // Display success message
+            setSuccess(response.data.detail);
         } catch (err: any) {
             setError(err.response?.data?.detail || "Reset error");
         } finally {

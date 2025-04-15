@@ -4,7 +4,6 @@ import { AxiosError } from 'axios';
 import { IUserPagination, IUser, IError } from '../../interfaces';
 import { userService } from '../../services/user.service';
 
-// Інтерфейс для стану
 interface IState {
     users: IUser[],
     page: number,
@@ -14,7 +13,6 @@ interface IState {
     errors: IError | null,
 }
 
-// Початковий стан
 const initialState: IState = {
     users: [],
     page: 1,
@@ -24,7 +22,6 @@ const initialState: IState = {
     errors: null,
 };
 
-// Асинхронний екшен для отримання списку юзерів
 const getAllUsers = createAsyncThunk<
         IUserPagination<IUser[]>,
     { page: number; order?: string; filters?: Record<string, string | boolean> }
@@ -105,13 +102,11 @@ const usersSlice = createSlice({
                 state.errors = action.payload;
             })
 
-            // Додай у extraReducers у usersSlice
+
             .addCase(createManager.fulfilled, (state, action) => {
                 const newUser = action.payload;
-                // Додаємо нового користувача на початок списку
-                state.users.unshift(newUser);
 
-                // Опційно: якщо використовуєш пагінацію, можна інкрементувати totalItems
+                state.users.unshift(newUser);
                 state.totalItems += 1;
             })
             .addCase(createManager.rejected, (state, action) => {
@@ -119,7 +114,6 @@ const usersSlice = createSlice({
             })
 
 
-        // Block user
             .addCase(blockUser.fulfilled, (state, action) => {
                 const updated = action.payload;
                 const index = state.users.findIndex(user => user.id === updated.id);
@@ -131,7 +125,6 @@ const usersSlice = createSlice({
                 state.errors = action.payload;
             })
 
-            // Unblock user
             .addCase(unblockUser.fulfilled, (state, action) => {
                 const updated = action.payload;
                 const index = state.users.findIndex(user => user.id === updated.id);

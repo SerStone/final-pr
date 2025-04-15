@@ -1,7 +1,7 @@
+import { AxiosError } from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { orderService } from "../../services";
 import { IOrder } from "../../interfaces";
-import { AxiosError } from "axios";
 
 interface OrdersState {
     orders: IOrder[];
@@ -21,7 +21,6 @@ const initialState: OrdersState = {
     error: null,
 };
 
-// Отримання замовлень
 const fetchOrders = createAsyncThunk(
     "orders/fetchOrders",
     async (
@@ -38,16 +37,40 @@ const fetchOrders = createAsyncThunk(
     }
 );
 
-// Оновлення замовлення
 const updateOrder = createAsyncThunk<IOrder, { orderId: number; updatedData: Partial<IOrder> }>(
     "orders/updateOrder",
     async ({ orderId, updatedData }, { rejectWithValue }) => {
         try {
             const { data } = await orderService.updateById(orderId, updatedData);
-            return data; // приходить оновлений ордер
+            return data;
         } catch (e) {
             const err = e as AxiosError;
             return rejectWithValue(err.response?.data || { message: "Помилка оновлення замовлення" });
+        }
+    }
+);
+
+const addCommentToOrder = createAsyncThunk<IOrder, { orderId: number, text: string }>(
+    'commentSlice/addCommentToOrder',
+    async ({ orderId, text }, { rejectWithValue }) => {
+        try {
+            const { data } = await orderService.addComment(orderId, text);
+            return data;
+        } catch (e) {
+            const err = e as AxiosError;
+            return rejectWithValue(err.response?.data || { message: "Unknown error" });
+        }
+    }
+);
+
+const deleteCommentFromOrder = createAsyncThunk<IOrder, { orderId: number, commentId: number }>(
+    'commentSlice/deleteCommentFromOrder',
+    async ({ orderId, commentId }, { rejectWithValue }) => {
+        try {
+            await orderService.deleteById(orderId, commentId);
+        } catch (e) {
+            const err = e as AxiosError;
+            return rejectWithValue(err.response?.data || { message: "Unknown error" });
         }
     }
 );
@@ -92,11 +115,24 @@ const slice = createSlice({
                 if (index !== -1) {
                     state.orders[index] = action.payload;
                 }
-                // якщо ордер був відфільтрований і не присутній, не додаємо його
             })
             .addCase(updateOrder.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload as string;
+            })
+            .addCase(addCommentToOrder.fulfilled, (state, action) => {
+                    const updatedOrder = action.payload;
+                    const index = state.orders.findIndex(order => order.id === updatedOrder.id);
+                    if (index !== -1) {
+                        state.orders[index] = updatedOrder;
+                    }
+                })
+            .addCase(deleteCommentFromOrder.fulfilled, (state, action) => {
+                const { orderId, commentId } = action.meta.arg;
+                const order = state.orders.find(order => order.id === orderId);
+                if (order) {
+                    order.comments = order.comments.filter(comment => comment.id !== commentId);
+                }
             });
     },
 });
@@ -107,6 +143,8 @@ const orderSliceActions = {
     ...actions,
     fetchOrders,
     updateOrder,
+    addCommentToOrder,
+    deleteCommentFromOrder
 };
 
 export {

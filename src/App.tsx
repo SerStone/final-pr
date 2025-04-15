@@ -1,34 +1,28 @@
-import React, {FC, useEffect, useState} from 'react';
-import {Navigate, Route, Routes, useNavigate } from 'react-router-dom';
-import './App.css';
+import React, { FC, useEffect, useState } from 'react';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
+import { Box } from "@mui/material";
+
 import { authService } from './services/auth.service';
-import {Box} from "@mui/material";
-import {MainLayout} from './layouts'
-import {LoginPage, RegisterPage} from './components'
-import {OrdersPage} from './pages/OrderPage/OrderPage'
-import { ActivateAccountForm } from './pages/ActivationPage/ActivationPage';
-import { AdminPanel } from './pages/AdminPanel/AdminPanel';
-
-import { PasswordResetPage } from './pages/PasswordResetPage/PasswordResetPage';
-import { ThemeProviderComponent } from './components/ThemeContext/ThemeContext';
-import { SessionModal } from './components/SessionModal/SessionModal';
+import { AdminPanel, ActivateAccountForm, PasswordResetPage, LoginPage, RegisterPage, OrdersPage } from './pages'
+import { MainLayout } from './layouts'
+import { ThemeProviderComponent, SessionModal ,ProtectedRoute, AuthRedirect } from './components';
 import { useAppLocation } from './hooks';
-import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute';
 
+import './App.css';
 
 const App: FC = () => {
     return (
         <ThemeProviderComponent>
             <Box>
                 <Routes>
-                        {/* Публічні сторінки */}
+                        <Route path="/" element={<AuthRedirect />} />
                         <Route path={'/register'} element={<RegisterPage />} />
                         <Route path={'/login'} element={<LoginPage />} />
                         <Route path={'/activate/:token'} element={<ActivateAccountForm />} />
                         <Route path={'/recovery/:token'} element={<PasswordResetPage />} />
 
                     <Route path={'/'} element={<MainLayout />}>
-                        {/* Захищені сторінки */}
+
                         <Route path={'/orders/v2'} element={
                             <ProtectedRoute>
                                 <OrdersPage />

@@ -1,15 +1,10 @@
 import {FC, useCallback, useState} from 'react';
 import {Outlet} from 'react-router-dom';
-
 import {Box, Container, createTheme, ThemeProvider} from '@mui/material';
 
-import {Header} from '../components';
-import {IUser} from "../interfaces/user.interface";
-import {Footer} from "../components"
+import {Header, Footer} from '../components';
 import {useAppLocation} from '../hooks'
-
-
-
+import {IUser} from "../interfaces/user.interface";
 
 const MainLayout: FC = () => {
     const location = useAppLocation();
