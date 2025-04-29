@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import {useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { debounce } from "lodash";
 import { CircularProgress, Table, TableBody, TableCell, TableHead, TableRow, TextField, MenuItem, Box, Button, Grid, FormControlLabel, Checkbox, IconButton, useTheme } from "@mui/material";
 import { ArrowDropUp, ArrowDropDown, Refresh } from "@mui/icons-material";
 
@@ -14,84 +15,112 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 const OrdersTable = () => {
     const dispatch = useAppDispatch();
     const [searchParams, setSearchParams] = useSearchParams();
+
     const { orders, totalPages, isLoading, error } = useAppSelector(state => state.orders);
-    const { groups, isLoading: isGroupsLoading } = useAppSelector(state => state.groups);
-    const { userData } = useAppSelector(state => state.user)
-    const username = userData.username
+    const { groups } = useAppSelector(state => state.groups);
+    const { userData } = useAppSelector(state => state.user);
+    const { darkMode } = useThemeContext();
 
     const id = userData?.id;
+    const username = userData?.username || "";
 
     const page = Number(searchParams.get("page")) || 1;
-    const courseFormat = searchParams.get("course_format") || "";
-    const courseType = searchParams.get("course_type") || "";
-    const course = searchParams.get("course") || "";
-    const status = searchParams.get("status") || "";
-    const name = searchParams.get("name") || "";
-    const surname = searchParams.get("surname") || "";
-    const phone = searchParams.get("phone") || "";
-    const age = searchParams.get("age") || "";
-    const alreadyPaid = searchParams.get("alreadyPaid") || "";
-    const sum = searchParams.get("sum") || "";
     const order = searchParams.get("order") || "-id";
-    const created_at_after = searchParams.get("created_at_after") || "";
-    const created_at_before = searchParams.get("created_at_before") || "";
-    const manager = searchParams.get("manager") || "";
-    const email = searchParams.get("email") || "";
-    const group = searchParams.get("group") || "";
 
+    const [filters, setFilters] = useState({
+        course: searchParams.get("course") || "",
+        courseFormat: searchParams.get("course_format") || "",
+        courseType: searchParams.get("course_type") || "",
+        status: searchParams.get("status") || "",
+        name: searchParams.get("name") || "",
+        surname: searchParams.get("surname") || "",
+        phone: searchParams.get("phone") || "",
+        email: searchParams.get("email") || "",
+        group: searchParams.get("group") || "",
+        age: searchParams.get("age") || "",
+        alreadyPaid: searchParams.get("alreadyPaid") || "",
+        sum: searchParams.get("sum") || "",
+        created_at_after: searchParams.get("created_at_after") || "",
+        created_at_before: searchParams.get("created_at_before") || "",
+        manager: searchParams.get("manager") || "",
+    });
 
+    const debouncedUpdateFilters = useCallback(
+        debounce((newFilters: Record<string, any>) => {
+            const newParams = new URLSearchParams();
 
+            const managerParam = searchParams.get("manager");
+            if (managerParam) {
+                newParams.set("manager", managerParam);
+            }
+
+            Object.entries(newFilters).forEach(([key, value]) => {
+                if (value !== undefined && value !== null && value !== '') {
+                    if (key === "courseFormat") newParams.set("course_format", String(value));
+                    else if (key === "courseType") newParams.set("course_type", String(value));
+                    else newParams.set(key, String(value));
+                }
+            });
+
+            newParams.set("page", "1");
+            newParams.set("order", order);
+            setSearchParams(newParams);
+        }, 500),
+        [order, searchParams]
+    );
 
     useEffect(() => {
-        dispatch(orderSliceActions.fetchOrders({ page, order, filters: {
-                course_format: courseFormat,
-                course_type: courseType,
-                status,
-                name,
-                phone,
-                course,
-                email,
-                surname,
-                group,
-                age,
-                alreadyPaid,
-                sum,
-                created_at_after,
-                created_at_before,
-                manager
-            } }));
-        dispatch(groupSliceActions.getAllGroups());
-    }, [dispatch, page,group,email, order,course, courseFormat, courseType, status,phone, name, surname, age, alreadyPaid, sum, manager, created_at_after, created_at_before]);
+        debouncedUpdateFilters(filters);
+    }, [filters, debouncedUpdateFilters]);
 
+    useEffect(() => {
+        dispatch(orderSliceActions.fetchOrders({
+            page,
+            order,
+            filters: {
+                course: searchParams.get("course") || "",
+                course_format: searchParams.get("course_format") || "",
+                course_type: searchParams.get("course_type") || "",
+                status: searchParams.get("status") || "",
+                name: searchParams.get("name") || "",
+                surname: searchParams.get("surname") || "",
+                phone: searchParams.get("phone") || "",
+                email: searchParams.get("email") || "",
+                group: searchParams.get("group") || "",
+                age: searchParams.get("age") || "",
+                alreadyPaid: searchParams.get("alreadyPaid") || "",
+                sum: searchParams.get("sum") || "",
+                created_at_after: searchParams.get("created_at_after") || "",
+                created_at_before: searchParams.get("created_at_before") || "",
+                manager: searchParams.get("manager") || "",
+            },
+        }));
+        dispatch(groupSliceActions.getAllGroups());
+    }, [dispatch, page, order, searchParams]);
 
     const handleSortToggle = () => {
         setSearchParams(prev => {
             const newParams = new URLSearchParams(prev);
             const currentOrder = newParams.get("order") || "-id";
-            const newOrder = currentOrder.startsWith("-") ? currentOrder.substring(1) : `-${currentOrder}`;
+            const newOrder = currentOrder.startsWith("-") ? currentOrder.slice(1) : `-${currentOrder}`;
             newParams.set("order", newOrder);
             return newParams;
         });
     };
 
     const handleFilterChange = (key: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchParams(prev => {
-            const newParams = new URLSearchParams(prev);
-            newParams.set(key, event.target.value);
-            newParams.set("page", "1");
-            return newParams;
-        });
+        setFilters(prev => ({
+            ...prev,
+            [key]: event.target.value,
+        }));
     };
 
     const handleDateChange = (key: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchParams(prev => {
-            const newParams = new URLSearchParams(prev);
-            newParams.set(key, event.target.value);
-            newParams.set("page", "1");
-            return newParams;
-        });
+        setFilters(prev => ({
+            ...prev,
+            [key]: event.target.value,
+        }));
     };
-
 
     const handlePageChange = (newPage: number) => {
         setSearchParams(prev => {
@@ -101,34 +130,36 @@ const OrdersTable = () => {
         });
     };
 
-
     const handleResetFilters = () => {
-        setSearchParams(new URLSearchParams({ page: "1" }));
+        setFilters({
+            course: "",
+            courseFormat: "",
+            courseType: "",
+            status: "",
+            name: "",
+            surname: "",
+            phone: "",
+            email: "",
+            group: "",
+            age: "",
+            alreadyPaid: "",
+            sum: "",
+            created_at_after: "",
+            created_at_before: "",
+            manager: "",
+        });
+        setSearchParams(new URLSearchParams({ page: "1", order: "-id" }));
     };
 
-    const { darkMode } = useThemeContext();
-
     return (
-        <Box sx={{ maxHeight: "80vh", overflowY: "auto", padding: 2 }}>
+        <Box sx={{
+            display: "flex",
+            flexDirection: "column",
+            height: "90vh",
 
+        }}>
             <OrderFilters
-                filters={{
-                    course,
-                    courseFormat,
-                    courseType,
-                    status,
-                    name,
-                    surname,
-                    phone,
-                    email,
-                    group,
-                    age,
-                    alreadyPaid,
-                    sum,
-                    created_at_after,
-                    created_at_before,
-                    manager,
-                }}
+                filters={filters}
                 username={username}
                 userId={id}
                 groups={groups}
@@ -138,71 +169,74 @@ const OrdersTable = () => {
                 setSearchParams={setSearchParams}
             />
 
-            <LoaderOrError isLoading={isLoading} error={error} />
-
-
-            {!isLoading && !error && (
-                <Box sx={{ display: "flex", flexDirection: "column" , justifyContent: "center" }}>
-
-                    <Table sx={{
-                        minWidth: 800,
-                        borderRadius: "20%" ,
-                        "& td, & th": { padding: "8px 12px", fontSize: "16px" },
-                        "& th": { backgroundColor: darkMode ? "#3e37a9" : "#0d254c", color: "white", textAlign: "left" },
-                        "& tr:nth-of-type(even)": {   backgroundColor: darkMode ? "#28293D" : "#f2f2f2" },
-                        "& tr:hover": { backgroundColor: darkMode ? "#282e56" : "#ddd" }
+            <LoaderOrError isLoading={isLoading} error={error}>
+                {!isLoading && !error && (
+                    <Box sx={{
+                        flexGrow: 1,
+                        overflowY: "auto",
                     }}>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>
-                                    <Button
-                                        variant="contained"
-                                        onClick={handleSortToggle}
-                                        sx={{
-                                            backgroundColor: darkMode ? "#3e37a9" : "#091a35",
-                                            color: "white",
-                                            "&:hover": { backgroundColor: darkMode ? "#3e37a9" : "#091a35" },
+                        <Table
+                            sx={{
+                                minWidth: 900,
+                                "& td, & th": { padding: "8px 12px", fontSize: "16px" },
+                                "& th": {
+                                    backgroundColor: darkMode ? "#3e37a9" : "#0d254c",
+                                    color: "white",
+                                    textAlign: "left"
+                                },
+                                "& tr:nth-of-type(even)": { backgroundColor: darkMode ? "#28293D" : "#f2f2f2" },
+                                "& tr:hover": { backgroundColor: darkMode ? "#282e56" : "#ddd" }
+                            }}
+                        >
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>
+                                        <Button
+                                            variant="contained"
+                                            onClick={handleSortToggle}
+                                            sx={{
+                                                backgroundColor: darkMode ? "#3e37a9" : "#091a35",
+                                                color: "white",
+                                                "&:hover": { backgroundColor: darkMode ? "#3e37a9" : "#091a35" },
+                                                display: "flex",
+                                                alignItems: "center",
+                                                gap: "5px"
+                                            }}
+                                        >
+                                            id {order.startsWith("-") ? <ArrowDropDown /> : <ArrowDropUp />}
+                                        </Button>
+                                    </TableCell>
+                                    <TableCell>name</TableCell>
+                                    <TableCell>surname</TableCell>
+                                    <TableCell>email</TableCell>
+                                    <TableCell>phone</TableCell>
+                                    <TableCell>age</TableCell>
+                                    <TableCell>course</TableCell>
+                                    <TableCell>format</TableCell>
+                                    <TableCell>type</TableCell>
+                                    <TableCell>status</TableCell>
+                                    <TableCell>sum</TableCell>
+                                    <TableCell>paid</TableCell>
+                                    <TableCell>group</TableCell>
+                                    <TableCell>date</TableCell>
+                                    <TableCell>manager</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {orders.map(order => (
+                                    <OrderInfo key={order.id} order={order} />
+                                ))}
+                            </TableBody>
+                        </Table>
 
-                                            display: "flex",
-                                            alignItems: "center",
-                                            gap: "5px"
-                                        }}
-                                    >
-                                        id {order.startsWith("-") ? <ArrowDropDown /> : <ArrowDropUp />}
-                                    </Button>
-                                </TableCell>
-                                <TableCell>name</TableCell>
-                                <TableCell>surname</TableCell>
-                                <TableCell>email</TableCell>
-                                <TableCell>phone</TableCell>
-                                <TableCell>age</TableCell>
-                                <TableCell>course</TableCell>
-                                <TableCell>format</TableCell>
-                                <TableCell>type</TableCell>
-                                <TableCell>status</TableCell>
-                                <TableCell>sum</TableCell>
-                                <TableCell>paid</TableCell>
-                                <TableCell>group</TableCell>
-                                <TableCell>date</TableCell>
-                                <TableCell>manager</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {orders.map((order) => (
-                                <OrderInfo key={order.id} order={order} />
-                            ))}
-                        </TableBody>
-                    </Table>
+                    </Box>
+                )}
 
-                    <Pagination
-                        currentPage={page}
-                        totalPages={totalPages}
-                        onPageChange={handlePageChange}
-                    />
-                </Box>
-            )}
+                <Pagination currentPage={page} totalPages={totalPages} onPageChange={handlePageChange} />
+
+            </LoaderOrError>
         </Box>
     );
 };
 
-export {OrdersTable};
+export { OrdersTable };

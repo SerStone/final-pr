@@ -86,7 +86,7 @@ const LoginPage = () => {
                             }}
                         />
                         <TextField
-                            {...register("password", { required: "Password is required", minLength: { value: 5, message: "Password must be at least 5 characters" } })}
+                            {...register("password", { required: "Password is required" })}
                             variant="outlined"
                             label="Password"
                             type={showPassword ? "text" : "password"}

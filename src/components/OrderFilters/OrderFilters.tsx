@@ -9,11 +9,10 @@ import {
     Checkbox
 } from "@mui/material";
 import { Refresh } from "@mui/icons-material";
+import { useSearchParams } from "react-router-dom";
 
 import { useThemeContext } from "../ThemeContext/ThemeContext";
 import { IGroup } from "../../interfaces";
-
-
 
 interface OrderFiltersProps {
     filters: {
@@ -53,6 +52,7 @@ const OrderFilters: React.FC<OrderFiltersProps> = ({
                                                        setSearchParams
                                                    }) => {
     const { darkMode } = useThemeContext();
+    const [searchParams] = useSearchParams();
 
     return (
         <Box sx={{ p: 2, backgroundColor: darkMode ? "#28293D" : "#fdfdff", borderRadius: 2 }}>
@@ -70,14 +70,14 @@ const OrderFilters: React.FC<OrderFiltersProps> = ({
                     </TextField>
                 </Grid>
                 <Grid item xs={12} sm={1.5}>
-                    <TextField select fullWidth label="courseFormat" value={filters.courseFormat} onChange={handleFilterChange("course_format")}>
+                    <TextField select fullWidth label="courseFormat" value={filters.courseFormat} onChange={handleFilterChange("courseFormat")}>
                         <MenuItem value="">All formats</MenuItem>
                         <MenuItem value="static">static</MenuItem>
                         <MenuItem value="online">online</MenuItem>
                     </TextField>
                 </Grid>
                 <Grid item xs={12} sm={1.5}>
-                    <TextField select fullWidth label="courseType" value={filters.courseType} onChange={handleFilterChange("course_type")}>
+                    <TextField select fullWidth label="courseType" value={filters.courseType} onChange={handleFilterChange("courseType")}>
                         <MenuItem value="">All types</MenuItem>
                         <MenuItem value="pro">pro</MenuItem>
                         <MenuItem value="minimal">minimal</MenuItem>
@@ -141,7 +141,7 @@ const OrderFilters: React.FC<OrderFiltersProps> = ({
                     <FormControlLabel
                         control={
                             <Checkbox
-                                checked={filters.manager === String(userId)}
+                                checked={searchParams.get("manager") === username}
                                 onChange={(e) =>
                                     setSearchParams(prev => {
                                         const newParams = new URLSearchParams(prev);

@@ -12,14 +12,17 @@ const MainLayout: FC = () => {
 
 
     return (
-            <Box>
-                <Box sx={{ width: "100%", height: "maxContent" }}>
-                    {!hideHeader && <Header />}
-                    <Outlet/>
-                    <Footer/>
+        <Box sx={{
+            display: "flex",
+            flexDirection: "column",
+            minHeight: "100vh",
+        }}>
+            {!hideHeader && <Header />}
 
-                </Box>
+            <Box sx={{ flexGrow: 1, overflow: "hidden" }}>
+                <Outlet />
             </Box>
+        </Box>
     );
 };
 

@@ -18,6 +18,8 @@ const EditOrderModal: FC<EditOrderModalProps> = ({ open, onClose, order }) => {
     const [groups, setGroups] = useState<IGroup[]>([]);
     const [selectedGroup, setSelectedGroup] = useState<number | null>(order.group?.id || null);
     const [loading, setLoading] = useState<boolean>(false);
+    const [modalLoading, setModalLoading] = useState(false);
+
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent<string>) => {
         const { name, value } = e.target;
@@ -45,8 +47,8 @@ const EditOrderModal: FC<EditOrderModalProps> = ({ open, onClose, order }) => {
     };
 
     const handleSaveChanges = async () => {
-        try {
             setLoading(true);
+        try {
             await dispatch(orderSliceActions.updateOrder({
                 orderId: editedOrder.id,
                 updatedData: {
@@ -192,7 +194,7 @@ const EditOrderModal: FC<EditOrderModalProps> = ({ open, onClose, order }) => {
                     </Select>
                 </Box>
                 <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3, gap: 2 }}>
-                    <Button variant="contained" color="success" onClick={handleSaveChanges}>
+                    <Button variant="contained" color="success" onClick={handleSaveChanges} type="button">
                         SUBMIT
                     </Button>
                     <Button variant="contained" color="secondary" onClick={onClose}>

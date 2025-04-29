@@ -71,8 +71,8 @@ const ExportToExcel = () => {
                 msg: order.msg,
                 status: order.status,
                 created_at: order.created_at,
-                group: order.group,
-                manager: order.manager ? order.manager.username : "N/A",
+                group: order.group ? order.group.group_name : "",
+                manager: order.manager ? order.manager.username : "",
                 comments: order.comments || ""
             }));
 

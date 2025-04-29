@@ -1,6 +1,6 @@
 import { CircularProgress, Typography, Box } from '@mui/material';
 
-const LoaderOrError = ({ isLoading, error }: { isLoading: boolean; error: any }) => {
+const LoaderOrError = ({ isLoading, error,children }: { isLoading: boolean; error: any,children: React.ReactNode; }) => {
     if (isLoading) {
         return (
             <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" minHeight="200px">
@@ -20,7 +20,7 @@ const LoaderOrError = ({ isLoading, error }: { isLoading: boolean; error: any })
         );
     }
 
-    return null;
+    return <>{children}</>;
 };
 
 

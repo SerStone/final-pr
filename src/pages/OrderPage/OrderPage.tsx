@@ -4,7 +4,7 @@ import { Header, OrdersTable } from "../../components";
 
 const OrdersPage = () => {
     return (
-        <Box sx={{ width: "100vw", minHeight: "100vh", overflowX: "hidden" }}>
+        <Box sx={{ width: "100vw", minHeight: "100vh",  overflow: "hidden", overflowX: "hidden" }}>
             <OrdersTable />
         </Box>
     );

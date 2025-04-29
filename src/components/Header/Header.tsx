@@ -22,7 +22,7 @@ const Header: React.FC = () => {
     };
 
     return (
-        <AppBar position="static" sx={{ backgroundColor: darkMode ? "#28293D" : "#f8f9fa", color: darkMode ? "#fff" : "#000" }}>
+        <AppBar position="static" sx={{ backgroundColor: darkMode ? "#28293D" : "#efefef", color: darkMode ? "#fff" : "#000" }}>
             <Toolbar sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <Box sx={{ display: "flex", gap: "15px", alignItems: "center" }}>
                     <Link to="/orders/v2?page=1">

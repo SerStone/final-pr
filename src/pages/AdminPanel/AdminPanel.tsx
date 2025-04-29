@@ -105,8 +105,8 @@ const AdminPanel = () => {
     }
 
     return (
-        <TableContainer component={Paper} sx={{ maxWidth: 1400, margin: "auto", mt: 4, p: 2 }}>
-            <Box display="flex" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
+        <>
+            <Box display="flex" justifyContent="space-evenly" alignItems="center" sx={{ mb: 2, marginTop: "20px" }}>
                 <Box/>
                 <Typography variant="h4">Admin Panel</Typography>
                 <div tabIndex={0} className={styles.plusButton} onClick={handleOpen}>
@@ -128,8 +128,19 @@ const AdminPanel = () => {
                     <Typography variant="subtitle1">Dubbing: {stats.dubbing}</Typography>
                 </Box>
             )}
-                    <LoaderOrError isLoading={isLoading} error={errors} />
-            <Table>
+                    <LoaderOrError isLoading={isLoading} error={errors}>
+
+
+
+        <TableContainer component={Paper} sx={{ maxWidth: 1400,       height: "65vh", margin: "auto", mt: 4, p: 2 }}>
+
+            <Table
+                 sx={{
+                    flexGrow: 1,
+                    overflowY: "auto",
+
+                }}
+            >
                 <TableHead>
                     <TableRow>
                         <TableCell sx={{ textAlign: 'center', fontWeight: 'bold' }}>ID</TableCell>
@@ -195,37 +206,39 @@ const AdminPanel = () => {
                                         </Button>
                                       </span>
                                     </Tooltip>
-                                <span>
-                                    {user.is_active ? (
-                                        <Tooltip title="Ban user">
-                                            <Button
-                                                variant="outlined"
-                                                color="error"
-                                                size="small"
-                                                disabled={!user.is_manager}
-                                                startIcon={<Block sx={{ fontSize: 18 }} />}
-                                                onClick={() => handleBlock(user.id)}
-                                                sx={{ textTransform: "none", height: 32, minWidth: 100 }}
-                                            >
-                                                Ban
-                                            </Button>
-                                        </Tooltip>
-                                    ) : (
-                                        <Tooltip title="Unban user">
-                                            <Button
-                                                variant="outlined"
-                                                color="primary"
-                                                size="small"
-                                                disabled={!user.is_manager}
-                                                startIcon={<LockOpen sx={{ fontSize: 18 }} />}
-                                                onClick={() => handleUnblock(user.id)}
-                                                sx={{ textTransform: "none", height: 32, minWidth: 100 }}
-                                            >
-                                                Unban
-                                            </Button>
-                                        </Tooltip>
-                                    )}
-                                         </span>
+                                    {!user.is_staff && (
+                                        <span>
+                                        {user.is_active ? (
+                                            <Tooltip title="Ban user">
+                                                <Button
+                                                    variant="outlined"
+                                                    color="error"
+                                                    size="small"
+                                                    disabled={!user.is_manager}
+                                                    startIcon={<Block sx={{ fontSize: 18 }} />}
+                                                    onClick={() => handleBlock(user.id)}
+                                                    sx={{ textTransform: "none", height: 32, minWidth: 100 }}
+                                                >
+                                                    Ban
+                                                </Button>
+                                            </Tooltip>
+                                        ) : (
+                                            <Tooltip title="Unban user">
+                                                <Button
+                                                    variant="outlined"
+                                                    color="primary"
+                                                    size="small"
+                                                    disabled={!user.is_manager}
+                                                    startIcon={<LockOpen sx={{ fontSize: 18 }} />}
+                                                    onClick={() => handleUnblock(user.id)}
+                                                    sx={{ textTransform: "none", height: 32, minWidth: 100 }}
+                                                >
+                                                    Unban
+                                                </Button>
+                                            </Tooltip>
+                                        )}
+                                    </span>
+                                                                    )}
                                 </Box>
                             </TableCell>
 
@@ -235,11 +248,6 @@ const AdminPanel = () => {
 
             </Table>
 
-            <Pagination
-                currentPage={page}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
-            />
 
             <Dialog open={open} onClose={handleClose} sx={{ '& .MuiPaper-root': { borderRadius: 4, padding: 2 } }}>
                 <DialogTitle sx={{ fontSize: "1.5rem", fontWeight: "bold", textAlign: "center" }}>
@@ -304,6 +312,13 @@ const AdminPanel = () => {
                 </DialogActions>
             </Dialog>
         </TableContainer>
+            <Pagination
+                currentPage={page}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+            />
+                    </LoaderOrError>
+</>
     );
 };
 

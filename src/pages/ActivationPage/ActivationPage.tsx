@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import {useNavigate, useParams } from "react-router-dom";
 import { TextField, Button, Alert, Container, Typography, Box } from "@mui/material";
 
 import { authService } from "../../services";
@@ -11,6 +11,26 @@ const ActivateAccountForm = () => {
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+
+    const validatePassword = (password: string): string | null => {
+        if (password.length < 8) {
+            return "Password must be at least 8 characters long";
+        }
+        if (!/[A-Z]/.test(password)) {
+            return "Password must contain at least one uppercase letter";
+        }
+        if (!/[a-z]/.test(password)) {
+            return "Password must contain at least one lowercase letter";
+        }
+        if (!/[0-9]/.test(password)) {
+            return "Password must contain at least one digit";
+        }
+        if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+            return "Password must contain at least one special character";
+        }
+        return null;
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -22,6 +42,12 @@ const ActivateAccountForm = () => {
             return;
         }
 
+        const passwordError = validatePassword(password);
+        if (passwordError) {
+            setError(passwordError);
+            return;
+        }
+
         if (password !== confirmPassword) {
             setError("Passwords do not match");
             return;
@@ -30,9 +56,14 @@ const ActivateAccountForm = () => {
         setLoading(true);
 
         try {
-            const response = await authService.activateAccount(token, password); // Токен передається через URL
+            const response = await authService.activateAccount(token, password);
             console.log(response);
-            setSuccess(response.data.detail); // Display success message
+            setSuccess(response.data.detail);
+
+            setTimeout(() => {
+                navigate("/login");
+            }, 2000);
+
         } catch (err: any) {
             setError(err.response?.data?.detail || "Activation error");
         } finally {
@@ -55,6 +86,9 @@ const ActivateAccountForm = () => {
                         fullWidth
                         margin="normal"
                         required
+                        inputProps={{ minLength: 8 }}
+                        error={!!error && error.toLowerCase().includes('password')}
+                        helperText={!!error && error.toLowerCase().includes('password') ? error : '' }
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
@@ -65,9 +99,12 @@ const ActivateAccountForm = () => {
                         fullWidth
                         margin="normal"
                         required
+                        error={!!error && error.toLowerCase().includes('match')}
+                        helperText={!!error && error.toLowerCase().includes('match') ? error : ''}
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                     />
+
 
                     <Button
                         type="submit"
