@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="f8198eaa-b35c-4f5c-b2b1-208b86bbd5c4" name="Changes" comment="Final project frontend-part/hotfixes+">
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ExcelButton/ExcelButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ExcelButton/ExcelButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Header/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Header/Header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/OrderFilters/OrderFilters.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/OrderFilters/OrderFilters.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/OrderTable/OrderTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/OrderTable/OrderTable.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/SessionModal/SessionModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SessionModal/SessionModal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/AdminPanel/AdminPanel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/AdminPanel/AdminPanel.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/slice/auth.slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/slice/auth.slice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/slice/users.slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/slice/users.slice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/axios.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/axios.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/user.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/user.service.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+        <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectId" id="2sRK8z6jkxEYvyNK4zHv6I3umsW" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/38063/IdeaProjects/final-pr/src/components/OrderTable&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reactor&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\IntelliJ IDEA 2022.1.3\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\38063\IdeaProjects\final-pr\src\components\OrderTable" />
+      <recent name="C:\Users\38063\IdeaProjects\final-pr\src\pages" />
+      <recent name="C:\Users\38063\IdeaProjects\final-pr\src\assets" />
+      <recent name="C:\Users\38063\IdeaProjects\final-pr\src\components\Footer" />
+      <recent name="C:\Users\38063\IdeaProjects\final-pr\src\components\Header" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.npm start">
+    <configuration name="Debug Application" type="JavascriptDebugType" uri="http://localhost:3000">
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="final-pr" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="final-pr" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="npm start" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f8198eaa-b35c-4f5c-b2b1-208b86bbd5c4" name="Changes" comment="" />
+      <created>1738412791522</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1738412791522</updated>
+      <workItem from="1738412792751" duration="4895000" />
+      <workItem from="1738597138186" duration="4944000" />
+      <workItem from="1738676941653" duration="10014000" />
+      <workItem from="1738740898728" duration="7045000" />
+      <workItem from="1738869237247" duration="3656000" />
+      <workItem from="1739100085743" duration="5418000" />
+      <workItem from="1739121130835" duration="6998000" />
+      <workItem from="1739172790783" duration="2401000" />
+      <workItem from="1739206553600" duration="593000" />
+      <workItem from="1739291132324" duration="7342000" />
+      <workItem from="1739303500673" duration="598000" />
+      <workItem from="1739309665914" duration="2348000" />
+      <workItem from="1740426032624" duration="2827000" />
+      <workItem from="1740484323605" duration="4405000" />
+      <workItem from="1740652919246" duration="489000" />
+      <workItem from="1740653421176" duration="6000" />
+      <workItem from="1740655142229" duration="3672000" />
+      <workItem from="1740665816689" duration="604000" />
+      <workItem from="1740672911536" duration="3850000" />
+      <workItem from="1740689480905" duration="1581000" />
+      <workItem from="1740695545155" duration="1444000" />
+      <workItem from="1740737702376" duration="1881000" />
+      <workItem from="1740760812077" duration="845000" />
+      <workItem from="1740776570256" duration="36000" />
+      <workItem from="1740776616386" duration="1883000" />
+      <workItem from="1740818796756" duration="3618000" />
+      <workItem from="1740834197834" duration="1161000" />
+      <workItem from="1740839926802" duration="3970000" />
+      <workItem from="1740852751396" duration="4190000" />
+      <workItem from="1741172496413" duration="2395000" />
+      <workItem from="1741191033384" duration="5290000" />
+      <workItem from="1741213728742" duration="3431000" />
+      <workItem from="1741344363832" duration="7627000" />
+      <workItem from="1741563993794" duration="2798000" />
+      <workItem from="1741795235032" duration="5413000" />
+      <workItem from="1741862569521" duration="9214000" />
+      <workItem from="1741945847231" duration="1266000" />
+      <workItem from="1741960006523" duration="17580000" />
+      <workItem from="1742035131042" duration="3564000" />
+      <workItem from="1742132989123" duration="4876000" />
+      <workItem from="1742326665666" duration="12704000" />
+      <workItem from="1742373178498" duration="8246000" />
+      <workItem from="1742419699267" duration="1969000" />
+      <workItem from="1742502694124" duration="1712000" />
+      <workItem from="1742544467371" duration="18192000" />
+      <workItem from="1742643856592" duration="217000" />
+      <workItem from="1742939518762" duration="2178000" />
+      <workItem from="1742988187488" duration="4737000" />
+      <workItem from="1742999542090" duration="15897000" />
+      <workItem from="1743071194355" duration="4364000" />
+      <workItem from="1743114547250" duration="1863000" />
+      <workItem from="1743192429250" duration="4115000" />
+      <workItem from="1743238754413" duration="635000" />
+      <workItem from="1743362690926" duration="4127000" />
+      <workItem from="1743415138676" duration="4780000" />
+      <workItem from="1743691016464" duration="992000" />
+      <workItem from="1743761406838" duration="599000" />
+      <workItem from="1744047840824" duration="673000" />
+      <workItem from="1744057417758" duration="6957000" />
+      <workItem from="1744103266955" duration="3302000" />
+      <workItem from="1744143138307" duration="4479000" />
+      <workItem from="1744209917147" duration="3300000" />
+      <workItem from="1744220096997" duration="3638000" />
+      <workItem from="1744231388092" duration="2651000" />
+      <workItem from="1744279897037" duration="4589000" />
+      <workItem from="1744313499460" duration="983000" />
+      <workItem from="1744319481284" duration="3417000" />
+      <workItem from="1744372620718" duration="4383000" />
+      <workItem from="1744486791563" duration="1414000" />
+      <workItem from="1744499924851" duration="1935000" />
+      <workItem from="1744548616201" duration="8283000" />
+      <workItem from="1744567280889" duration="1618000" />
+      <workItem from="1744578290663" duration="1861000" />
+      <workItem from="1744633400665" duration="604000" />
+      <workItem from="1744644036362" duration="7908000" />
+      <workItem from="1744665159955" duration="3407000" />
+      <workItem from="1744670449120" duration="18000" />
+      <workItem from="1744670811795" duration="10000" />
+      <workItem from="1744704108596" duration="648000" />
+      <workItem from="1744728237265" duration="3658000" />
+      <workItem from="1744732707569" duration="7000" />
+      <workItem from="1745677085425" duration="8992000" />
+      <workItem from="1745785396632" duration="16000" />
+      <workItem from="1745790111916" duration="3205000" />
+      <workItem from="1745863327801" duration="8284000" />
+      <workItem from="1745929162679" duration="5080000" />
+      <workItem from="1745935258331" duration="10000" />
+      <workItem from="1745935569544" duration="420000" />
+      <workItem from="1746896760477" duration="74000" />
+      <workItem from="1746896931470" duration="6349000" />
+      <workItem from="1747424517186" duration="5268000" />
+      <workItem from="1747491918039" duration="4696000" />
+    </task>
+    <task id="LOCAL-00001" summary="Final project frontend-part+">
+      <created>1744567582761</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1744567582761</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Final project frontend-part/hotfixes+">
+      <created>1745934333705</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1745934333705</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Final project frontend-part+" />
+    <MESSAGE value="Final project frontend-part/hotfixes+" />
+    <option name="LAST_COMMIT_MESSAGE" value="Final project frontend-part/hotfixes+" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
