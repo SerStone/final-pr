@@ -5,7 +5,7 @@ import {orderStatsSliceActions, userActions, usersActions } from "../../redux";
 import {
     Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
     Paper, Typography, Button, Box, Dialog, DialogActions, DialogContent,
-    DialogTitle, TextField, Tooltip
+    DialogTitle, TextField, Tooltip, Alert
 } from "@mui/material";
 import {Block, LockOpen, LockReset, Send } from "@mui/icons-material";
 
@@ -19,7 +19,7 @@ import styles from "./AdminPanel.module.css";
 
 const AdminPanel = () => {
     const dispatch = useAppDispatch();
-    const { users, totalPages, isLoading, errors} = useAppSelector((state) => state.users);
+    const { users, totalPages, isLoading, actionError, fetchError} = useAppSelector((state) => state.users);
     const { stats, loading: statsLoading, error: statsError } = useAppSelector(state => state.stats);
     const [searchParams, setSearchParams] = useSearchParams();
     const { userData } = useAppSelector((state) => state.user);
@@ -128,8 +128,12 @@ const AdminPanel = () => {
                     <Typography variant="subtitle1">Dubbing: {stats.dubbing}</Typography>
                 </Box>
             )}
-                    <LoaderOrError isLoading={isLoading} error={errors}>
-
+                    <LoaderOrError isLoading={isLoading} error={fetchError}>
+                        {actionError && (
+                            <Alert severity="error">
+                                {typeof actionError === 'string' ? actionError : actionError?.detail || 'Unknown error'}
+                            </Alert>
+                        )}
 
 
         <TableContainer component={Paper} sx={{ maxWidth: 1400,       height: "65vh", margin: "auto", mt: 4, p: 2 }}>

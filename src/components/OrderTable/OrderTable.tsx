@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useState } from "react";
+import {useCallback, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { debounce } from "lodash";
 import { CircularProgress, Table, TableBody, TableCell, TableHead, TableRow, TextField, MenuItem, Box, Button, Grid, FormControlLabel, Checkbox, IconButton, useTheme } from "@mui/material";
@@ -44,30 +44,38 @@ const OrdersTable = () => {
         created_at_before: searchParams.get("created_at_before") || "",
         manager: searchParams.get("manager") || "",
     });
+    const prevFiltersRef = useRef<typeof filters>(filters);
 
     const debouncedUpdateFilters = useCallback(
-        debounce((newFilters: Record<string, any>) => {
-            const newParams = new URLSearchParams();
+        debounce((newFilters: typeof filters) => {
+            const newParams = new URLSearchParams(searchParams.toString());
 
-            const managerParam = searchParams.get("manager");
-            if (managerParam) {
-                newParams.set("manager", managerParam);
-            }
+            const filtersChanged = Object.keys(newFilters).some(
+                (key) => newFilters[key as keyof typeof filters] !== prevFiltersRef.current[key as keyof typeof filters]
+            );
 
             Object.entries(newFilters).forEach(([key, value]) => {
                 if (value !== undefined && value !== null && value !== '') {
                     if (key === "courseFormat") newParams.set("course_format", String(value));
                     else if (key === "courseType") newParams.set("course_type", String(value));
+                    else if (key === "manager") newParams.set("manager", String(value));
                     else newParams.set(key, String(value));
+                } else {
+                    newParams.delete(key);
                 }
             });
 
-            newParams.set("page", "1");
+            if (filtersChanged) {
+                newParams.set("page", "1");
+            }
+
             newParams.set("order", order);
             setSearchParams(newParams);
+            prevFiltersRef.current = newFilters;
         }, 500),
         [order, searchParams]
     );
+
 
     useEffect(() => {
         debouncedUpdateFilters(filters);
@@ -112,6 +120,13 @@ const OrdersTable = () => {
         setFilters(prev => ({
             ...prev,
             [key]: event.target.value,
+        }));
+    };
+
+    const handleCheckboxChange = (key: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
+        setFilters(prev => ({
+            ...prev,
+            [key]: event.target.checked ? username : "",
         }));
     };
 
@@ -167,6 +182,7 @@ const OrdersTable = () => {
                 handleDateChange={handleDateChange}
                 handleResetFilters={handleResetFilters}
                 setSearchParams={setSearchParams}
+                handleCheckboxChange={handleCheckboxChange}
             />
 
             <LoaderOrError isLoading={isLoading} error={error}>

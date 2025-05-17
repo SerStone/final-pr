@@ -36,6 +36,7 @@ interface OrderFiltersProps {
     groups: IGroup[];
     username: string;
     handleFilterChange: (key: string) => (e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleCheckboxChange: (key: string) => (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleDateChange: (key: string) => (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleResetFilters: () => void;
     setSearchParams: (params: URLSearchParams | ((prev: URLSearchParams) => URLSearchParams)) => void;
@@ -49,7 +50,8 @@ const OrderFilters: React.FC<OrderFiltersProps> = ({
                                                        handleFilterChange,
                                                        handleDateChange,
                                                        handleResetFilters,
-                                                       setSearchParams
+                                                       setSearchParams,
+                                                       handleCheckboxChange
                                                    }) => {
     const { darkMode } = useThemeContext();
     const [searchParams] = useSearchParams();
@@ -141,19 +143,8 @@ const OrderFilters: React.FC<OrderFiltersProps> = ({
                     <FormControlLabel
                         control={
                             <Checkbox
-                                checked={searchParams.get("manager") === username}
-                                onChange={(e) =>
-                                    setSearchParams(prev => {
-                                        const newParams = new URLSearchParams(prev);
-                                        if (e.target.checked && userId) {
-                                            newParams.set("manager", username );
-                                        } else {
-                                            newParams.delete("manager");
-                                        }
-                                        newParams.set("page", "1");
-                                        return newParams;
-                                    })
-                                }
+                                checked={filters.manager === username}
+                                onChange={handleCheckboxChange("manager")}
                             />
                         }
                         label="My orders"

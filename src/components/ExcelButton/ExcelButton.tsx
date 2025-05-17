@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import * as XLSX from "xlsx";
 import { Button } from "@mui/material";
-
 import { saveAs } from "file-saver";
+
 import {IOrder} from '../../interfaces'
 import { orderService } from "../../services";
 
@@ -11,40 +11,30 @@ import styles from "./ExcelButton.module.css";
 
 const ExportToExcel = () => {
     const [searchParams] = useSearchParams();
-    const [progress, setProgress] = useState<number | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
 
-    const fetchAllOrders = async () => {
+    const fetchAllOrders = async (): Promise<IOrder[]> => {
         try {
-            let allOrders: IOrder[] = [];
-            let page = 1;
-            let totalPages = 1;
+            setIsLoading(true);
 
-            setProgress(0);
+            const searchParamsObj = Object.fromEntries(searchParams);
+            delete searchParamsObj.page;
 
-            do {
-                const searchParamsObj = Object.fromEntries(searchParams);
-                delete searchParamsObj.page;
+            const response = await orderService.getAll(undefined, undefined, {
+                ...searchParamsObj,
+                all: 'true',
+            });
 
-                const response = await orderService.getAll(page, undefined, searchParamsObj);
-                const data = response.data;
-
-                allOrders = [...allOrders, ...data.data];
-                totalPages = data.total_pages;
-
-                setProgress(Math.round((page / totalPages) * 100));
-
-                page++;
-            } while (page <= totalPages);
-
-            setProgress(null);
-            return allOrders;
+            return response.data.data || [];
         } catch (error) {
             console.error("Fetch error:", error);
             alert(`Failed to fetch orders: ${error}`);
-            setProgress(null);
             return [];
+        } finally {
+            setIsLoading(false);
         }
     };
+
 
 
     const exportToExcel = async () => {
@@ -87,36 +77,33 @@ const ExportToExcel = () => {
             saveAs(blob, "orders.xlsx");
 
         } catch (error) {
-            console.error("Export error:", error);
             alert(`Export failed: ${error}`);
         }
     };
 
     return (
-        <button className={styles.button} onClick={exportToExcel}>
-            <svg
-                strokeLinejoin="round"
-                strokeLinecap="round"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                viewBox="0 0 24 24"
-                className={styles.button__icon}
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <path fill="none" d="M0 0h24v24H0z" stroke="none"></path>
-                <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"></path>
-                <path d="M7 11l5 5l5 -5"></path>
-                <path d="M12 4l0 12"></path>
-            </svg>
-            <span>.xlsx</span>
-            {progress !== null && (
-                <div className={styles.progress}>
-                    <div className={styles.progressBar}>
-                        <div className={styles.progressFill} style={{ width: `${progress}%` }} />
-                    </div>
-                    <span>{progress}%</span>
-                </div>
+        <button className={styles.button} onClick={exportToExcel} disabled={isLoading}>
+            {isLoading ? (
+                <span>Loading...</span>
+            ) : (
+                <>
+                    <svg
+                        strokeLinejoin="round"
+                        strokeLinecap="round"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        viewBox="0 0 24 24"
+                        className={styles.button__icon}
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path fill="none" d="M0 0h24v24H0z" stroke="none"></path>
+                        <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"></path>
+                        <path d="M7 11l5 5l5 -5"></path>
+                        <path d="M12 4l0 12"></path>
+                    </svg>
+                    <span>.xlsx</span>
+                </>
             )}
         </button>
 

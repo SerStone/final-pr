@@ -1,5 +1,4 @@
 import {axiosService} from "./axios.service";
-
 import {IPagination, IUser, IUserPagination} from "../interfaces";
 import {urls} from "../constants";
 import {IRes} from "../types/axiosRes.type";

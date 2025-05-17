@@ -1,6 +1,13 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography } from "@mui/material";
+import {
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+    Button,
+    Typography,
+} from "@mui/material";
 
 import { authService } from "../../services";
 
@@ -19,24 +26,6 @@ const SessionModal = () => {
             });
         });
     }, []);
-
-    const handleExtend = async () => {
-        try {
-            const refreshToken = authService.getRefreshToken();
-            if (!refreshToken) {
-                resolver?.(null);
-                return;
-            }
-
-            const { data } = await authService.refresh(refreshToken);
-            authService.setTokens(data.access, data.refresh);
-            resolver?.(data.access);
-            setOpen(false);
-        } catch (err) {
-            resolver?.(null);
-            setOpen(false);
-        }
-    };
 
     const handleLogout = () => {
         authService.deleteToken();
@@ -58,15 +47,12 @@ const SessionModal = () => {
             </DialogTitle>
             <DialogContent>
                 <Typography variant="body2" align="center" color="textSecondary">
-                    Your session has expired. Would you like to extend it?
+                    Your session has expired. Please log in again.
                 </Typography>
             </DialogContent>
             <DialogActions sx={{ justifyContent: "center", pb: 2 }}>
-                <Button onClick={handleLogout} variant="outlined" color="inherit">
+                <Button onClick={handleLogout} variant="contained" color="primary">
                     Logout
-                </Button>
-                <Button onClick={handleExtend} variant="contained" color="primary">
-                    Extend
                 </Button>
             </DialogActions>
         </Dialog>

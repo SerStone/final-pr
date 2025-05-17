@@ -10,7 +10,8 @@ interface IState {
     totalItems: number,
     totalPages: number,
     isLoading: boolean,
-    errors: IError | null,
+    fetchError: IError | null,
+    actionError: IError | null,
 }
 
 const initialState: IState = {
@@ -19,7 +20,8 @@ const initialState: IState = {
     totalItems: 0,
     totalPages: 0,
     isLoading: false,
-    errors: null,
+    fetchError: null,
+    actionError: null,
 };
 
 const getAllUsers = createAsyncThunk<
@@ -87,7 +89,7 @@ const usersSlice = createSlice({
         builder
             .addCase(getAllUsers.pending, (state) => {
                 state.isLoading = true;
-                state.errors = null;
+                state.fetchError = null;
             })
             .addCase(getAllUsers.fulfilled, (state, action) => {
                 const { data, total_pages } = action.payload;
@@ -99,7 +101,7 @@ const usersSlice = createSlice({
             })
             .addCase(getAllUsers.rejected, (state, action) => {
                 state.isLoading = false;
-                state.errors = action.payload;
+                state.fetchError = action.payload;
             })
 
 
@@ -110,7 +112,7 @@ const usersSlice = createSlice({
                 state.totalItems += 1;
             })
             .addCase(createManager.rejected, (state, action) => {
-                state.errors = action.payload;
+                state.actionError = action.payload;
             })
 
 
@@ -122,7 +124,7 @@ const usersSlice = createSlice({
                 }
             })
             .addCase(blockUser.rejected, (state, action) => {
-                state.errors = action.payload;
+                state.actionError = action.payload;
             })
 
             .addCase(unblockUser.fulfilled, (state, action) => {
@@ -133,7 +135,7 @@ const usersSlice = createSlice({
                 }
             })
             .addCase(unblockUser.rejected, (state, action) => {
-                state.errors = action.payload;
+                state.actionError = action.payload;
             });
     },
 });
