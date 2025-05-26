@@ -70,7 +70,13 @@ const LoginPage = () => {
                             alignItems: "center"}} />
                     <Typography variant="h5" fontWeight="bold" gutterBottom>Member Login</Typography>
                         <TextField
-                            {...register("email", { required: "Email is required" })}
+                            {...register("email", {
+                                required: "Email is required",
+                                pattern: {
+                                    value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                                    message: "Invalid email. Example: name@example.com",
+                                },
+                            })}
                             variant="outlined"
                             label="Email"
                             type="email"

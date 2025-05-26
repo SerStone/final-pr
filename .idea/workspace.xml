@@ -2,18 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f8198eaa-b35c-4f5c-b2b1-208b86bbd5c4" name="Changes" comment="Final project frontend-part/hotfixes+">
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ExcelButton/ExcelButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ExcelButton/ExcelButton.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Header/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Header/Header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/OrderFilters/OrderFilters.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/OrderFilters/OrderFilters.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/OrderTable/OrderTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/OrderTable/OrderTable.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/SessionModal/SessionModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SessionModal/SessionModal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/AdminPanel/AdminPanel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/AdminPanel/AdminPanel.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/redux/slice/auth.slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/slice/auth.slice.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/slice/users.slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/slice/users.slice.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/axios.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/axios.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/user.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/user.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/auth.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,8 +16,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
-        <option value="TypeScript JSX File" />
         <option value="TypeScript File" />
+        <option value="TypeScript JSX File" />
       </list>
     </option>
   </component>
@@ -51,7 +43,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/38063/IdeaProjects/final-pr/src/components/OrderTable&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/38063/IdeaProjects/final-pr/src/components/CreateManagerDialog&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -63,11 +55,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\38063\IdeaProjects\final-pr\src\components\CreateManagerDialog" />
+      <recent name="C:\Users\38063\IdeaProjects\final-pr\src\components\ActivationLinkDialog" />
+      <recent name="C:\Users\38063\IdeaProjects\final-pr\src\components" />
+      <recent name="C:\Users\38063\IdeaProjects\final-pr\src\pages\AdminPanel" />
       <recent name="C:\Users\38063\IdeaProjects\final-pr\src\components\OrderTable" />
-      <recent name="C:\Users\38063\IdeaProjects\final-pr\src\pages" />
-      <recent name="C:\Users\38063\IdeaProjects\final-pr\src\assets" />
-      <recent name="C:\Users\38063\IdeaProjects\final-pr\src\components\Footer" />
-      <recent name="C:\Users\38063\IdeaProjects\final-pr\src\components\Header" />
     </key>
   </component>
   <component name="RunManager" selected="npm.npm start">
@@ -197,7 +189,11 @@
       <workItem from="1746896760477" duration="74000" />
       <workItem from="1746896931470" duration="6349000" />
       <workItem from="1747424517186" duration="5268000" />
-      <workItem from="1747491918039" duration="4696000" />
+      <workItem from="1747491918039" duration="5561000" />
+      <workItem from="1747862474449" duration="156000" />
+      <workItem from="1747862767804" duration="602000" />
+      <workItem from="1748253539345" duration="4070000" />
+      <workItem from="1748279271457" duration="6710000" />
     </task>
     <task id="LOCAL-00001" summary="Final project frontend-part+">
       <created>1744567582761</created>
@@ -213,7 +209,21 @@
       <option name="project" value="LOCAL" />
       <updated>1745934333705</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Final project frontend-part/hotfixes+">
+      <created>1747502284020</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1747502284020</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Final project frontend-part/hotfixes+">
+      <created>1747502469181</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1747502469181</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

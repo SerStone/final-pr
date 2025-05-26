@@ -9,13 +9,11 @@ import {
 } from "@mui/material";
 import {Block, LockOpen, LockReset, Send } from "@mui/icons-material";
 
-import { useThemeContext, Pagination, LoaderOrError } from "../../components";
+import { ActivationLinkDialog, CreateManagerDialog,useThemeContext, Pagination, LoaderOrError } from "../../components";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { IUser } from "../../interfaces";
 
 import styles from "./AdminPanel.module.css";
-
-
 
 const AdminPanel = () => {
     const dispatch = useAppDispatch();
@@ -25,11 +23,30 @@ const AdminPanel = () => {
     const { userData } = useAppSelector((state) => state.user);
     const page = Number(searchParams.get("page")) || 1;
     const [open, setOpen] = useState(false);
+
+
+
     const [formData, setFormData] = useState({
         email: "",
         username: "",
         profile: { first_name: "", last_name: "" }
-    });
+    })
+
+    const [activationDialogOpen, setActivationDialogOpen] = React.useState(false);
+    const [activationLink, setActivationLink] = React.useState("");
+    const [dialogType, setDialogType] = React.useState<"activation" | "recovery">("activation");
+
+    const openActivationDialog = (link: string) => {
+        setActivationLink(link);
+        setDialogType("activation");
+        setActivationDialogOpen(true);
+    }
+
+    const openRecoveryDialog = (link: string) => {
+        setActivationLink(link);
+        setDialogType("recovery");
+        setActivationDialogOpen(true);
+    }
 
     useEffect(() => {
         if (userData?.is_staff) {
@@ -75,7 +92,6 @@ const AdminPanel = () => {
             handleClose();
         }
     };
-
 
 
     const generatePagination = (currentPage: number, totalPages: number) => {
@@ -180,20 +196,27 @@ const AdminPanel = () => {
                             <TableCell sx={{ textAlign: 'center' }}>
                                 <Box display="flex" flexDirection="column" gap={1}>
                                     <Tooltip title="Send activation email">
-                                      <span>
-                                        <Button
-                                            variant="outlined"
-                                            color="success"
-                                            size="small"
-                                            startIcon={<Send sx={{ fontSize: 18 }} />}
-                                            disabled={user.is_manager}
-                                            onClick={() => dispatch(userActions.sendActivationMail(user.id))}
-                                            sx={{ textTransform: "none", height: 32, minWidth: 100 }}
-                                        >
-                                          Activate
-                                        </Button>
-                                      </span>
+                                          <span>
+                                            <Button
+                                                variant="outlined"
+                                                color="success"
+                                                size="small"
+                                                startIcon={<Send sx={{ fontSize: 18 }} />}
+                                                disabled={user.is_manager}
+                                                onClick={async () => {
+                                                    const result = await dispatch(userActions.sendActivationMail(user.id));
+                                                    if (userActions.sendActivationMail.fulfilled.match(result)) {
+                                                        setActivationLink(result.payload || "Link not available");
+                                                        setActivationDialogOpen(true);
+                                                    }
+                                                }}
+                                                sx={{ textTransform: "none", height: 32, minWidth: 100 }}
+                                            >
+                                              Activate
+                                            </Button>
+                                          </span>
                                     </Tooltip>
+
 
                                     <Tooltip title="Send password recovery email">
                                       <span>
@@ -203,7 +226,12 @@ const AdminPanel = () => {
                                             size="small"
                                             startIcon={<LockReset sx={{ fontSize: 18 }} />}
                                             disabled={!user.is_manager}
-                                            onClick={() => dispatch(userActions.sendRecoveryMail(user.email))}
+                                            onClick={async () => {
+                                                const result = await dispatch(userActions.sendRecoveryMail(user.email));
+                                                if (userActions.sendRecoveryMail.fulfilled.match(result)) {
+                                                    openRecoveryDialog(result.payload || "Link not available");
+                                                }
+                                            }}
                                             sx={{ textTransform: "none", height: 32, minWidth: 100 }}
                                         >
                                           Recover
@@ -251,70 +279,20 @@ const AdminPanel = () => {
                 </TableBody>
 
             </Table>
+            <ActivationLinkDialog
+                open={activationDialogOpen}
+                onClose={() => setActivationDialogOpen(false)}
+                link={activationLink}
+                type={dialogType}
+            />
 
-
-            <Dialog open={open} onClose={handleClose} sx={{ '& .MuiPaper-root': { borderRadius: 4, padding: 2 } }}>
-                <DialogTitle sx={{ fontSize: "1.5rem", fontWeight: "bold", textAlign: "center" }}>
-                    Create Manager
-                </DialogTitle>
-                <DialogContent>
-                    <Box component="form" sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}>
-                        <TextField
-                            fullWidth
-                            label="Email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            margin="dense"
-                            variant="outlined"
-                            sx={{ borderRadius: 2 }}
-                        />
-                        <TextField
-                            fullWidth
-                            label="Username"
-                            name="username"
-                            value={formData.username}
-                            onChange={handleChange}
-                            margin="dense"
-                            variant="outlined"
-                            sx={{ borderRadius: 2 }}
-                        />
-                        <TextField
-                            fullWidth
-                            label="First Name"
-                            name="first_name"
-                            value={formData.profile.first_name}
-                            onChange={handleChange}
-                            margin="dense"
-                            variant="outlined"
-                            sx={{ borderRadius: 2 }}
-                        />
-                        <TextField
-                            fullWidth
-                            label="Last Name"
-                            name="last_name"
-                            value={formData.profile.last_name}
-                            onChange={handleChange}
-                            margin="dense"
-                            variant="outlined"
-                            sx={{ borderRadius: 2 }}
-                        />
-                    </Box>
-                </DialogContent>
-                <DialogActions sx={{ justifyContent: "space-between", px: 3, pb: 2 }}>
-                    <Button onClick={handleClose} color="secondary" sx={{ textTransform: "none", fontWeight: "bold" }}>
-                        Cancel
-                    </Button>
-                    <Button onClick={handleSubmit} color="primary" variant="contained" sx={{
-                        textTransform: "none",
-                        fontWeight: "bold",
-                        borderRadius: 2,
-                        px: 3
-                    }}>
-                        Create
-                    </Button>
-                </DialogActions>
-            </Dialog>
+            <CreateManagerDialog
+                open={open}
+                handleClose={handleClose}
+                handleSubmit={handleSubmit}
+                handleChange={handleChange}
+                formData={formData}
+            />
         </TableContainer>
             <Pagination
                 currentPage={page}

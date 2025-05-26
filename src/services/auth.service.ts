@@ -17,14 +17,19 @@ const authService = {
     activateAccount: (token: string, password: string) =>
         axiosService.post(urls.auth.activate(token), { password }),
 
-    sendActivationMail: (userId: number) =>
-    axiosService.post(urls.auth.activationMailAcc, { user_id: userId }),
+    sendActivationMail: async (userId: number): Promise<{ activation_link: string }> => {
+        const response = await axiosService.post(urls.auth.activationMailAcc, { user_id: userId });
+        return response.data;
+    },
 
     resetPassword: (token: string, password: string) =>
         axiosService.post(urls.auth.recoveryNewPass(token), { password }),
 
-    sendRecoveryMail: (email: string) =>
-        axiosService.post(urls.auth.recoveryMailPass, { email }),
+    sendRecoveryMail: async (email: string): Promise<{ recovery_link: string }> => {
+        const response = await axiosService.post(urls.auth.recoveryMailPass, { email } )
+        return response.data;
+    },
+
 
     setTokens: (access: string, refresh: string) => {
         localStorage.setItem(_accessTokenKey, access);

@@ -18,26 +18,33 @@ const getUser = createAsyncThunk("user/getUser", async (_, { rejectWithValue }) 
     }
 });
 
-const sendActivationMail = createAsyncThunk(
+const sendActivationMail = createAsyncThunk<
+    string,
+    number,
+    { rejectValue: string }
+    >(
     "user/sendActivationMail",
-    async (userId: number, { rejectWithValue }) => {
+    async (userId, { rejectWithValue }) => {
         try {
-            await authService.sendActivationMail(userId);
+            const { activation_link } = await authService.sendActivationMail(userId);
+            return activation_link;
         } catch (e) {
-            if (axios.isAxiosError(e)) return rejectWithValue(e.response?.data);
-            return rejectWithValue("Невідома помилка");
+            if (axios.isAxiosError(e)) return rejectWithValue(e.response?.data || "Activation error");
+            return rejectWithValue("Unknown error");
         }
     }
 );
+
 
 const sendRecoveryMail = createAsyncThunk(
     "user/sendRecoveryMail",
     async (email: string, { rejectWithValue }) => {
         try {
-            await authService.sendRecoveryMail(email);
+          const { recovery_link } = await authService.sendRecoveryMail(email);
+          return recovery_link;
         } catch (e) {
             if (axios.isAxiosError(e)) return rejectWithValue(e.response?.data);
-            return rejectWithValue("Невідома помилка");
+            return rejectWithValue("Unknown error");
         }
     }
 );
