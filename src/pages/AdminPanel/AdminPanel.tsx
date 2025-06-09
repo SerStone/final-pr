@@ -137,7 +137,7 @@ const AdminPanel = () => {
             {stats && (
                 <Box display="flex" gap={2} mt={2} justifyContent="center" flexWrap="wrap">
                     <Typography variant="subtitle1">Total: {stats.total}</Typography>
-                    <Typography variant="subtitle1">New: {stats.New}</Typography>
+                    <Typography variant="subtitle1">New: {stats.New + stats.null}</Typography>
                     <Typography variant="subtitle1">In Work: {stats.in_work}</Typography>
                     <Typography variant="subtitle1">Agreed: {stats.aggre}</Typography>
                     <Typography variant="subtitle1">Disagreed: {stats.disaggre}</Typography>

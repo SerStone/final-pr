@@ -27,6 +27,7 @@ const fetchOrderStats = createAsyncThunk(
                 aggre: data["Aggre"] || 0,
                 disaggre: data["Disaggre"] || 0,
                 dubbing: data["Dubbing"] || 0,
+                null: data["null"] || 0,
             };
             return mappedStats;
         } catch (e: any) {

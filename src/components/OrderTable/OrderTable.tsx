@@ -15,6 +15,26 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 const OrdersTable = () => {
     const dispatch = useAppDispatch();
     const [searchParams, setSearchParams] = useSearchParams();
+    const searchParamsString = searchParams.toString();
+
+    const columns = [
+        { key: "id", label: "id" },
+        { key: "name", label: "name" },
+        { key: "surname", label: "surname" },
+        { key: "email", label: "email" },
+        { key: "phone", label: "phone" },
+        { key: "age", label: "age" },
+        { key: "course", label: "course" },
+        { key: "course_format", label: "format" },
+        { key: "course_type", label: "type" },
+        { key: "status", label: "status" },
+        { key: "sum", label: "sum" },
+        { key: "alreadyPaid", label: "alreadyPaid" },
+        { key: "group", label: "group" },
+        { key: "created_at", label: "created_at" },
+        { key: "manager", label: "manager" },
+    ];
+
 
     const { orders, totalPages, isLoading, error } = useAppSelector(state => state.orders);
     const { groups } = useAppSelector(state => state.groups);
@@ -48,11 +68,18 @@ const OrdersTable = () => {
 
     const debouncedUpdateFilters = useCallback(
         debounce((newFilters: typeof filters) => {
-            const newParams = new URLSearchParams(searchParams.toString());
+            const newParams = new URLSearchParams();
 
-            const filtersChanged = Object.keys(newFilters).some(
+            let filtersChanged = Object.keys(newFilters).some(
                 (key) => newFilters[key as keyof typeof filters] !== prevFiltersRef.current[key as keyof typeof filters]
             );
+            if (filtersChanged) {
+                newParams.set("page", "1");
+            } else {
+                newParams.set("page", String(page));
+            }
+
+            newParams.set("order", order);
 
             Object.entries(newFilters).forEach(([key, value]) => {
                 if (value !== undefined && value !== null && value !== '') {
@@ -60,20 +87,15 @@ const OrdersTable = () => {
                     else if (key === "courseType") newParams.set("course_type", String(value));
                     else if (key === "manager") newParams.set("manager", String(value));
                     else newParams.set(key, String(value));
-                } else {
-                    newParams.delete(key);
                 }
             });
 
             if (filtersChanged) {
-                newParams.set("page", "1");
+                setSearchParams(newParams);
+                prevFiltersRef.current = newFilters;
             }
-
-            newParams.set("order", order);
-            setSearchParams(newParams);
-            prevFiltersRef.current = newFilters;
         }, 500),
-        [order, searchParams]
+        [order, page]
     );
 
 
@@ -104,17 +126,27 @@ const OrdersTable = () => {
             },
         }));
         dispatch(groupSliceActions.getAllGroups());
-    }, [dispatch, page, order, searchParams]);
+    }, [dispatch, page, order, searchParamsString]);
 
-    const handleSortToggle = () => {
+    const handleSort = (column: string) => {
         setSearchParams(prev => {
             const newParams = new URLSearchParams(prev);
             const currentOrder = newParams.get("order") || "-id";
-            const newOrder = currentOrder.startsWith("-") ? currentOrder.slice(1) : `-${currentOrder}`;
+
+            let newOrder: string;
+            if (currentOrder === column) {
+                newOrder = `-${column}`;
+            } else if (currentOrder === `-${column}`) {
+                newOrder = column;
+            } else {
+                newOrder = column;
+            }
+
             newParams.set("order", newOrder);
             return newParams;
         });
     };
+
 
     const handleFilterChange = (key: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
         setFilters(prev => ({
@@ -206,36 +238,32 @@ const OrdersTable = () => {
                         >
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>
-                                        <Button
-                                            variant="contained"
-                                            onClick={handleSortToggle}
+                                    {columns.map(({ key, label }) => (
+                                        <TableCell
+                                            key={key}
+                                            onClick={() => handleSort(key)}
                                             sx={{
                                                 backgroundColor: darkMode ? "#3e37a9" : "#091a35",
                                                 color: "white",
-                                                "&:hover": { backgroundColor: darkMode ? "#3e37a9" : "#091a35" },
-                                                display: "flex",
-                                                alignItems: "center",
-                                                gap: "5px"
+                                                cursor: "pointer",
+                                                userSelect: "none",
+                                                "&:hover": {
+                                                    backgroundColor: darkMode ? "#4c44d4" : "#12335d",
+                                                },
+                                                fontWeight: "bold",
+                                                whiteSpace: "nowrap",
                                             }}
                                         >
-                                            id {order.startsWith("-") ? <ArrowDropDown /> : <ArrowDropUp />}
-                                        </Button>
-                                    </TableCell>
-                                    <TableCell>name</TableCell>
-                                    <TableCell>surname</TableCell>
-                                    <TableCell>email</TableCell>
-                                    <TableCell>phone</TableCell>
-                                    <TableCell>age</TableCell>
-                                    <TableCell>course</TableCell>
-                                    <TableCell>format</TableCell>
-                                    <TableCell>type</TableCell>
-                                    <TableCell>status</TableCell>
-                                    <TableCell>sum</TableCell>
-                                    <TableCell>paid</TableCell>
-                                    <TableCell>group</TableCell>
-                                    <TableCell>date</TableCell>
-                                    <TableCell>manager</TableCell>
+                                            <Box display="flex" alignItems="center" gap={1}>
+                                                {label}
+                                                {order === key ? (
+                                                    <ArrowDropUp />
+                                                ) : order === `-${key}` ? (
+                                                    <ArrowDropDown />
+                                                ) : null}
+                                            </Box>
+                                        </TableCell>
+                                    ))}
                                 </TableRow>
                             </TableHead>
                             <TableBody>

@@ -1,15 +1,28 @@
-import {FC, useCallback, useState} from 'react';
-import {Outlet} from 'react-router-dom';
+import {FC, useCallback, useEffect, useState} from 'react';
+import {Outlet, useNavigate} from 'react-router-dom';
 import {Box, Container, createTheme, ThemeProvider} from '@mui/material';
 
-import {Header, Footer} from '../components';
+import {Header, Footer, isTokenValid} from '../components';
 import {useAppLocation} from '../hooks'
 import {IUser} from "../interfaces/user.interface";
+import { authService } from '../services';
 
 const MainLayout: FC = () => {
     const location = useAppLocation();
     const hideHeader = location.pathname === "/login";
+    const navigate = useNavigate();
 
+    useEffect(() => {
+        const token = authService.getAccessToken();
+
+        if (location.pathname === "/") {
+            if (isTokenValid(token)) {
+                navigate("/orders/v2?page=1", { replace: true });
+            } else {
+                navigate("/login", { replace: true });
+            }
+        }
+    }, [location.pathname]);
 
     return (
         <Box sx={{

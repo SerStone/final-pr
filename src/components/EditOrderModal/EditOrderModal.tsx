@@ -67,7 +67,13 @@ const EditOrderModal: FC<EditOrderModalProps> = ({ open, onClose, order }) => {
 
     useEffect(() => {
         if (open) {
-            setEditedOrder(order);
+            setEditedOrder((prevOrder) => {
+                const isUnassigned = !order.manager;
+                return {
+                    ...order,
+                    status: isUnassigned ? "In work" : order.status,
+                };
+            });
             setSelectedGroup(order.group?.id || null);
         }
     }, [open, order]);

@@ -5,4 +5,5 @@ export interface IOrderStats {
     aggre: number;
     disaggre: number;
     dubbing: number;
+    null: number;
 }

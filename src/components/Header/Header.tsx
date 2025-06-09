@@ -27,20 +27,22 @@ const Header: React.FC = () => {
         <AppBar position="static" sx={{ backgroundColor: darkMode ? "#28293D" : "#efefef", color: darkMode ? "#fff" : "#000" }}>
             <Toolbar sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <Box sx={{ display: "flex", gap: "15px", alignItems: "center" }}>
-                    <Link to="/orders/v2?page=1&order=-id">
+                    <Link to="/orders/v2?page=1">
                         <img src={Logo} alt="Logo" style={{ height: 40, borderRadius: '50%' }} />
                     </Link>
 
-                    <Button startIcon={<Home />} component={Link} to="/orders/v2?page=1&order=-id" sx={{ textTransform: "none", color: darkMode ? "#fff" : "#000" }}>
+                    <Button startIcon={<Home />} component={Link} to="/orders/v2?page=1" sx={{ textTransform: "none", color: darkMode ? "#fff" : "#000" }}>
                         Home
                     </Button>
                     {showExportButton && <ExportToExcel />}
                 </Box>
 
                 <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center"}}>
-                    <Link to="/adminPanel?page=1" style={{ textDecoration: "none", color: "inherit" }}>
-                        <AdminPanelSettingsIcon style={{ fontSize: 40, borderRadius: "15%" }} />
-                    </Link>
+                    {userData?.is_staff ? (
+                        <Link to="/adminPanel?page=1" style={{ textDecoration: "none", color: "inherit" }}>
+                            <AdminPanelSettingsIcon style={{ fontSize: 40, borderRadius: "15%" }} />
+                        </Link>
+                    ) : null}
                     <IconButton onClick={toggleTheme} color="inherit">
                         {darkMode ? <LightMode /> : <DarkMode />}
                     </IconButton>
