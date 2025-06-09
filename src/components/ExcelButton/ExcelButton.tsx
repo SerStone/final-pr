@@ -17,13 +17,11 @@ const ExportToExcel = () => {
         try {
             setIsLoading(true);
 
-            const searchParamsObj = Object.fromEntries(searchParams);
-            delete searchParamsObj.page;
+            const params = new URLSearchParams(searchParams);
+            params.delete('page');
+            params.set('all', 'true');
 
-            const response = await orderService.getAll(undefined, undefined, {
-                ...searchParamsObj,
-                all: 'true',
-            });
+            const response = await orderService.getAll(undefined, undefined, Object.fromEntries(params.entries()));
 
             return response.data.data || [];
         } catch (error) {
@@ -34,6 +32,7 @@ const ExportToExcel = () => {
             setIsLoading(false);
         }
     };
+
 
 
 

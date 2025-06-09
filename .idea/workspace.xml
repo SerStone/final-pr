@@ -3,15 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f8198eaa-b35c-4f5c-b2b1-208b86bbd5c4" name="Changes" comment="Final project frontend-part/hotfixes+">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/EditOrderModal/EditOrderModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/EditOrderModal/EditOrderModal.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Header/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Header/Header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/OrderTable/OrderTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/OrderTable/OrderTable.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ProtectedRoute/ProtectedRoute.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ProtectedRoute/ProtectedRoute.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interfaces/stat.interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfaces/stat.interface.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/layouts/MainLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/layouts/MainLayout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/AdminPanel/AdminPanel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/AdminPanel/AdminPanel.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/slice/stat.slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/slice/stat.slice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ExcelButton/ExcelButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ExcelButton/ExcelButton.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -205,7 +197,7 @@
       <workItem from="1749287509708" duration="2074000" />
       <workItem from="1749416269523" duration="3256000" />
       <workItem from="1749452633384" duration="6205000" />
-      <workItem from="1749485771996" duration="1215000" />
+      <workItem from="1749485771996" duration="2339000" />
     </task>
     <task id="LOCAL-00001" summary="Final project frontend-part+">
       <created>1744567582761</created>
@@ -242,7 +234,14 @@
       <option name="project" value="LOCAL" />
       <updated>1748291389554</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Final project frontend-part/hotfixes+">
+      <created>1749498365212</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1749498365212</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
